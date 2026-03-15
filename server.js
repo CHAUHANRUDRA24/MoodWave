@@ -20,6 +20,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Serve the reset password page
+app.get('/reset-password', (req, res) => {
+    res.sendFile(path.join(__dirname, 'reset-password.html'));
+});
+
 // Authentication endpoint
 app.post('/api/signup', async (req, res) => {
     try {
