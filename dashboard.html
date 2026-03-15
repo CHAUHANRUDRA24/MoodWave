@@ -3,37 +3,78 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Moodwave - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+    <title>Moodwave - Your Personal Soundscape</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#1DB954",
-                        "background-light": "#000000",
-                        "background-dark": "#000000",
+                        "primary": "#ffffff",
+                        "accent": "#0ea5e9",
+                        "bg-main": "#050505",
                     },
                     fontFamily: {
-                        "display": ["Public Sans", "sans-serif"]
+                        "sans": ["Inter", "sans-serif"]
                     },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
                 },
             },
         }
     </script>
     <style>
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: white;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-sidebar {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glass-header {
+            background: rgba(5, 5, 5, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .glass-player {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
         .bg-gradient-mesh {
-            background-color: #000000;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,10%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,10%,1) 0, transparent 50%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         /* Dynamic Click Effect Styles */
@@ -69,80 +110,327 @@
         }
     </style>
 </head>
-<body class="font-display bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100 selection:bg-primary/30">
-<div class="relative min-h-screen w-full flex flex-col bg-gradient-mesh overflow-x-hidden">
-    
-    <!-- Navbar -->
-    <nav class="w-full px-6 py-4 md:px-10 flex items-center justify-between z-20 border-b border-white/10 glass-panel">
-        <div class="flex items-center gap-3">
-            <div class="bg-primary p-1.5 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
-                <span class="material-symbols-outlined text-white text-2xl">waves</span>
+<body class="bg-bg-main font-sans text-white overflow-hidden h-screen flex flex-col bg-gradient-mesh">
+<div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 glass-sidebar flex flex-col z-30 hidden md:flex">
+        <div class="p-8">
+            <div class="flex items-center gap-3 text-white font-bold text-2xl mb-12 tracking-tight">
+                <span class="material-symbols-outlined text-3xl font-light">waves</span>
+                <span>Moodwave</span>
             </div>
-            <div class="flex flex-col">
-                <h1 class="text-xl font-black tracking-tighter text-slate-100 leading-none">MOODWAVE</h1>
+            <nav class="space-y-6">
+                <div class="space-y-3">
+                    <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-white/30 px-3">Discover</p>
+                    <a class="flex items-center gap-4 px-3 py-2 text-white bg-white/5 rounded-lg transition-all duration-200 group" href="#">
+                        <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1">home</span>
+                        <span class="text-sm font-medium">Home</span>
+                    </a>
+                    <a class="flex items-center gap-4 px-3 py-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group" href="#">
+                        <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">search</span>
+                        <span class="text-sm font-medium">Search</span>
+                    </a>
+                    <a class="flex items-center gap-4 px-3 py-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group" href="#">
+                        <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">library_music</span>
+                        <span class="text-sm font-medium">Your Library</span>
+                    </a>
+                </div>
+                <div class="space-y-3">
+                    <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-white/30 px-3">Your Collection</p>
+                    <button class="flex items-center gap-4 px-3 py-2 w-full text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group">
+                        <div class="w-6 h-6 flex items-center justify-center bg-white/10 rounded group-hover:bg-white group-hover:text-black transition-colors">
+                            <span class="material-symbols-outlined text-sm">add</span>
+                        </div>
+                        <span class="text-sm font-medium">Create Playlist</span>
+                    </button>
+                    <button class="flex items-center gap-4 px-3 py-2 w-full text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group">
+                        <div class="w-6 h-6 flex items-center justify-center bg-gradient-to-br from-blue-500/80 to-purple-500/80 rounded shadow-lg shadow-blue-500/20">
+                            <span class="material-symbols-outlined text-sm text-white fill-1">favorite</span>
+                        </div>
+                        <span class="text-sm font-medium">Liked Songs</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+        <div class="mt-auto p-8 border-t border-white/5">
+            <div class="flex items-center gap-4 p-2 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group">
+                <div class="relative">
+                    <img alt="User avatar" class="w-10 h-10 rounded-full object-cover ring-1 ring-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU1TxjOUVPFQ0adzLEaHkGN_Hunva4uPnqhj0X5zc_pvhfitqeZ4NO7q0_9wgbwX3Lfmt1GIwhUnyLhXobInrzWkXnVGuSc5gevETQDdliidse4qopqLkVhc0QnlnjmFDW_KPpap2G89Lcb5OuOYnu2-5giTvAmKtw1BrqPBpnk3HFkA8MGI-TmF0jI0bsr1vry-vNQnrpiT2BWUgasa9mI5Jjp4TSqygflSl-eu6rRvwh8gujMQKLYR4k78zkD3E4pQVLquNmmlI"/>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-black rounded-full"></div>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p id="sidebar-user-name" class="text-sm font-semibold truncate group-hover:text-white transition-colors">Alex Rivera</p>
+                    <p class="text-[11px] text-white/40 tracking-wide uppercase font-bold">Pro Account</p>
+                </div>
             </div>
         </div>
-        <div class="flex items-center gap-4">
-            <span id="user-display" class="text-sm font-semibold text-slate-300"></span>
-            <button id="logout-btn" class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-sm font-bold transition-colors">
-                Log Out
-            </button>
-        </div>
-    </nav>
+    </aside>
 
-    <!-- Main Content -->
-    <main class="w-full flex-grow flex flex-col items-center justify-center p-6 md:p-12 z-10 relative">
-        <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full opacity-50 pointer-events-none"></div>
-
-        <div class="glass-panel w-full max-w-4xl p-10 rounded-3xl text-center shadow-2xl relative">
-             <div class="mx-auto mb-6 size-24 rounded-full bg-primary/20 flex items-center justify-center text-primary shadow-lg shadow-primary/20">
-                <span class="material-symbols-outlined" style="font-size: 48px;">music_note</span>
-            </div>
-            <h2 class="text-4xl md:text-5xl font-black tracking-tighter text-white mb-4">Welcome to the Wave!</h2>
-            <p class="text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
-                You have successfully authenticated. This is a secure dashboard protected by JWT. Your music journey starts right here.
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors cursor-pointer group">
-                    <span class="material-symbols-outlined text-primary mb-4 group-hover:scale-110 transition-transform">library_music</span>
-                    <h3 class="text-lg font-bold text-white mb-2">My Playlists</h3>
-                    <p class="text-sm text-slate-400">View and manage all your saved moodwave track collections.</p>
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col overflow-hidden relative">
+        <!-- Top Bar -->
+        <header class="flex items-center justify-between px-8 py-6 sticky top-0 z-40 glass-header">
+            <div class="flex items-center gap-6">
+                <div class="flex gap-4">
+                    <button class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors border border-white/10">
+                        <span class="material-symbols-outlined text-white text-xl">chevron_left</span>
+                    </button>
+                    <button class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors border border-white/10">
+                        <span class="material-symbols-outlined text-white text-xl">chevron_right</span>
+                    </button>
                 </div>
-                 <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors cursor-pointer group">
-                    <span class="material-symbols-outlined text-primary mb-4 group-hover:scale-110 transition-transform">explore</span>
-                    <h3 class="text-lg font-bold text-white mb-2">Discover New</h3>
-                    <p class="text-sm text-slate-400">Find new artists and tracks based on your daily listening habits.</p>
-                </div>
-                 <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors cursor-pointer group">
-                    <span class="material-symbols-outlined text-primary mb-4 group-hover:scale-110 transition-transform">settings</span>
-                    <h3 class="text-lg font-bold text-white mb-2">Account Settings</h3>
-                    <p class="text-sm text-slate-400">Update your profile, change passwords, and manage billing info.</p>
+                <div class="hidden lg:flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/5 focus-within:bg-white/10 transition-colors">
+                    <span class="material-symbols-outlined text-white/40 text-xl mr-2">search</span>
+                    <input class="bg-transparent border-none text-sm p-0 focus:ring-0 placeholder-white/20 w-64" placeholder="Search artists, songs..." type="text"/>
                 </div>
             </div>
+            <div class="flex items-center gap-4">
+                <button class="hidden sm:block text-xs font-bold px-6 py-2.5 rounded-full glass hover:bg-white hover:text-black transition-all duration-300">
+                    Upgrade to Premium
+                </button>
+                <div class="flex items-center gap-3 bg-white/5 rounded-full py-1.5 pl-1.5 pr-4 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                    <img alt="Profile" class="w-7 h-7 rounded-full object-cover shadow-inner shadow-white/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTB76bzWFNINPHLEvWKwglW6HmLk7dJBhYhHRQ4Yon00KhW8XOB41AxNiib0nEgis9e4if3zr_4mr29y9-m6yoGDtzeZGNAGMo42RTJz7q50anQ-qRrg48_15oc9Sex2zvUgBhv17fWu3sJQ8ibJTaB6SqGs1x68f4NR3Q3X1jPuGLiID9A5iauqE7l-03o1mOfmkwCc3zq8rHrcK3x0UHqVJ6RidOlCoT66XJX0x4kJAGdu7jjxNb2MD4WGyruJ3sb5qkkStKNNw"/>
+                    <span id="header-user-name" class="text-xs font-semibold tracking-tight">Alex Rivera</span>
+                </div>
+                <button id="logout-btn" class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-xs font-bold transition-colors">
+                    Log Out
+                </button>
+            </div>
+        </header>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto px-12 pb-40 custom-scrollbar">
+            <section class="mt-8">
+                <h1 class="text-4xl font-extrabold tracking-tight mb-8">Good morning</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="group flex items-center bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer pr-4">
+                        <div class="size-20 shadow-lg">
+                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7pZMSqAu9QMsC5FJ4BBAr5wIZKUiU8sN-YMtn2pkz4rhnEu1HnwV52aCNpbS-WkfkYKOBuND6atI3BWzeLEtQrIpEwFKHeWdQIRHt_daSUndXwt1i4AVNaczF8fCdxgJOlajTNoK4clMG7Rs1cGXBJdY5yIdOEB0qzjdnTfR2V5XMsNaGP2pozGbMhCqK4IkpXJyFVSEOVKq-n_Shn2vHyaiFDrG1bw6-yCp_SO_gz8-T05SNdjCor29hQBy618_k7OBGrtHQgAQ"/>
+                        </div>
+                        <p class="flex-1 font-bold px-4">Daily Mix 1</p>
+                        <button class="size-12 rounded-full bg-white text-black flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                        </button>
+                    </div>
+                    <div class="group flex items-center bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer pr-4">
+                        <div class="size-20 shadow-lg">
+                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZXoi0EVdWnQ0PrHTIZJ_T-sZG0c10yRlg0ErcddDqFz1w7ibcLkJc0g7B8iyEYYqXOjiVo94RyDWd-FtbaPIL0ZQi3st1hIRJdIws0xx_ppAw4P2P10uxHk1Qkc7niNwTXjjeqbAn_o6M0eoJJdD9reYjJ-HCx_nLsyHQtA2iN_h3LUtkTUvvjSUwtiGtRaH8bCDXJlz2p3N-YYzuJ0VD0E1tXR9_r1dd3x6jABOBdK51Dy-bfkP2e9cq4FpZcQ2hXQJC3AFlki4"/>
+                        </div>
+                        <p class="flex-1 font-bold px-4">Jazz Classics</p>
+                        <button class="size-12 rounded-full bg-white text-black flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                        </button>
+                    </div>
+                    <div class="group flex items-center bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer pr-4">
+                        <div class="size-20 shadow-lg">
+                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyGvhk-hRi6nWh91KnH_f_Zt4mZGkbceRrKfJXQxoYCK_hfmaBdCDweiIpufJFJosh7zlsFM-dPDvKlVIwbyr7HdfrrAnZ-9ElQbw7-fCV9EHHAB6WaK82SwQMG7hu0gP-39OGP1dOp23kU_RFx1JDRnWUaETdmr4YaSHKrmwkBPFXmOdrRwGmNcTRTlkPG7LqKmbM-LV1VDoJifXji3lJRkNvUuNSsHpzXTMFVmgKbH6yKjdPO_SosyiHTeDW-vLkOx-qxSJnuLk"/>
+                        </div>
+                        <p class="flex-1 font-bold px-4">Rock Anthems</p>
+                        <button class="size-12 rounded-full bg-white text-black flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Your Top Mixes -->
+            <section class="mt-12">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold tracking-tight">Your Top Mixes</h2>
+                    <a class="text-xs font-bold uppercase tracking-wider text-white/40 hover:text-white transition-colors" href="#">Show all</a>
+                </div>
+                <div class="flex gap-8 overflow-x-auto hide-scrollbar pb-4">
+                    <div class="min-w-[200px] p-5 glass rounded-2xl hover:bg-white/10 transition-all duration-300 group cursor-pointer border border-white/10">
+                        <div class="relative aspect-square mb-5 shadow-2xl rounded-xl overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfoh1xp-qjGPsnD6fmaPheu-opPqdreFf6_DJXc-RcwKx3VhskEr9ExUkb0ifn34gEs7WF0Cfgs3MuepW_nYQWjkVixc-VbVcnVw_5jRoDTNuV74Lq-GtwqB9Zx2WV2FSg4vJ4LE8riOqI7rkWahKd8enZW_8_UkE_Mare5hFfiJU4Lo6UJFVGbiwp0gGXUgn2EQhh8QEEDtJvf977MRMCmvFrRddZ8CTQz8PSkD3uSxDckG0zXd83WhwsvwgDFDqYMCZ6KIQwPB4"/>
+                            <button class="absolute bottom-3 right-3 size-12 rounded-full bg-white text-black flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                            </button>
+                        </div>
+                        <h3 class="font-bold mb-1 truncate">Pop Mix</h3>
+                        <p class="text-xs text-white/40 line-clamp-2 leading-relaxed">Lauv, Taylor Swift, Billie Eilish and more</p>
+                    </div>
+                    <div class="min-w-[200px] p-5 glass rounded-2xl hover:bg-white/10 transition-all duration-300 group cursor-pointer border border-white/10">
+                        <div class="relative aspect-square mb-5 shadow-2xl rounded-xl overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpQHWjWNHz7VmXTQuZ3XpPmqgeitRU53hUr6Tt3izd6mvK8uifnLo0GVnTpc2xWCli1ZBvsQpOAn_sEjX2kMQjvkDRh3aTTEFkXX4n1L6Rx0WZD_CGzTyUCfe_mk6xELZFkg3MsG6LrX4ojt2Sr5Imb0YrDNlP8yeOjkp4bi7SfDYBiJTMrgFv7_AVLVZYDkum5P2O5wvncRcfzs6GVuvVOrAvBXbZvnyGxbGye9hgiyrcg0ZP-IQ9MyEQo2IX0h1EQ3gJSCOnIrI"/>
+                            <button class="absolute bottom-3 right-3 size-12 rounded-full bg-white text-black flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                            </button>
+                        </div>
+                        <h3 class="font-bold mb-1 truncate">Chill Mix</h3>
+                        <p class="text-xs text-white/40 line-clamp-2 leading-relaxed">Lofi Girl, Sleepy Fish, and others</p>
+                    </div>
+                    <div class="min-w-[200px] p-5 glass rounded-2xl hover:bg-white/10 transition-all duration-300 group cursor-pointer border border-white/10">
+                        <div class="relative aspect-square mb-5 shadow-2xl rounded-xl overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjR73-BlN2wLpQAO9CQMAyfpxTyhIBjVXi_iDUBcLiHeI0TWzwtVwMTc-8uSckWZHCwnxwki4XX19Asd0203DKwO_HXGv1oj6RjdtktW1CVfd1iBPkBqiNOZ57wyIbwFvG02qO0qDXjkMpfXXL3Egj8fdoe7yLcvlJAjwQFNuPbvXenO2YBybzTYCWrv6PCgJd0KUA7EBO3hru5tExiFCbyU27ZaH-01zflJWonj4ao0nvJ00JgPJPp-IbBlwtcYvWzGqFW_DSc4I"/>
+                            <button class="absolute bottom-3 right-3 size-12 rounded-full bg-white text-black flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                            </button>
+                        </div>
+                        <h3 class="font-bold mb-1 truncate">EDM Mix</h3>
+                        <p class="text-xs text-white/40 line-clamp-2 leading-relaxed">Avicii, Martin Garrix, Tiësto</p>
+                    </div>
+                    <div class="min-w-[200px] p-5 glass rounded-2xl hover:bg-white/10 transition-all duration-300 group cursor-pointer border border-white/10">
+                        <div class="relative aspect-square mb-5 shadow-2xl rounded-xl overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcCOtGy-ZkokJLeE5vtPk_vuQMK_f3xLmgt5zcyHGNSZPo7hte1t7hw07xl7__Fv2JYnkBkzfi5R8LGiS35szJC3kNLKI8t7dpDGGXP3iSA88b8QYI5y7GqNf5G7_jdkK9CaxD789H6JPEG33B5mbwG07Rsi6gkDmj9WmA8GDMB222WaI5IeYeirhXvdY86PmSqb5SGp33b5Z30PtlZaEfBSIVSnv90HgM7-qKt30GfQrvULioQYxEn38c5ojlSnUlZr7Dk1-UHa0"/>
+                            <button class="absolute bottom-3 right-3 size-12 rounded-full bg-white text-black flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                            </button>
+                        </div>
+                        <h3 class="font-bold mb-1 truncate">Indie Mix</h3>
+                        <p class="text-xs text-white/40 line-clamp-2 leading-relaxed">Bon Iver, Fleet Foxes, The Paper Kites</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recently Played -->
+            <section class="mt-12">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold tracking-tight">Recently Played</h2>
+                </div>
+                <div class="flex gap-8 overflow-x-auto hide-scrollbar pb-4">
+                    <div class="min-w-[180px] cursor-pointer group">
+                        <div class="aspect-square mb-4 rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnEUjNt8l_czykAKhEsivrvYyNi5GPZ4DaPSVWP4FfFQa71fghbPGMuyI1TlK85ZiTduOuvgYxHbuWJ8wme3H_Fona7QtmLqNQpsrRdVJGEoHPY03eJjJHktDK-N1XN5s0RXFTOfOv3NLkQD5oKFSXjTWckdB9GbwcIJnii6ygn1QhHjX3MtpSeyLOCQscADsuYmcM1I8gGWgNXOVm5VrmLP2YLcOqB3qkiHUY4lgoaGgsDWcBqIuWVTGiT88M6mQ4kzdaYEJ8ToE"/>
+                        </div>
+                        <h3 class="font-bold text-sm truncate">Night Visions</h3>
+                        <p class="text-xs text-white/40">Imagine Dragons</p>
+                    </div>
+                    <div class="min-w-[180px] cursor-pointer group">
+                        <div class="aspect-square mb-4 rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDicDFaoOa4xTyf5VbIgyAYa3HhMXk_ww9QFvw4Ybvk9Vz00g047s4dKq81Js-Jmt9fYFiTs-SqAhi9QkCf4PgNTp9S7tUDcAE_fcrQrc6f78j3IdBUMTTc6Yq4O8uIeNcAK6p60SPCQRKdbqvVgTIn8IJ4eupNtnUL0LWQE4_28SVVEa2OfKibEoPHcT37bzGGfgwDNbcafMf6sCkza6r1fV0pS8R26zaZvvbVc6CSk5_DKU19qXVeNT3qBqsr60uaq15qGzjYLbQ"/>
+                        </div>
+                        <h3 class="font-bold text-sm truncate">Future Nostalgia</h3>
+                        <p class="text-xs text-white/40">Dua Lipa</p>
+                    </div>
+                    <div class="min-w-[180px] cursor-pointer group">
+                        <div class="aspect-square mb-4 rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtSGRY5VZVM2gtId4HVi1BFB-rNZLafjX13vor43Qof2Yp9FySKiJfRnETTaQdHy4-5T6_FbCdjzBh-zPtdVlPsdUkd0XFUaaYbZRgfxGhU6Rshm1Lizbvi-RAIf6VmqZXl3ih4tgMbTInaK8SX6moXSkmyyU9tfw2F2Z4Xz42FVnIlWvJgPchJU2TC9mU0OUNV4EHzoovM3hpWOU6KwJ6xu9i76Um2F7619VFaPtuzRpGQ2Lk8ZpW8CdrbdHUqH3hSdDe6Z7fcRU"/>
+                        </div>
+                        <h3 class="font-bold text-sm truncate">Folklore</h3>
+                        <p class="text-xs text-white/40">Taylor Swift</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommended Artists -->
+            <section class="mt-12 mb-12">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold tracking-tight">Recommended Artists</h2>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8">
+                    <div class="group cursor-pointer">
+                        <div class="relative aspect-square mb-4 rounded-full overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-105 ring-1 ring-white/10">
+                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv8ClCo1CBy16ds_pJkwLD8IJ67L2P35G5-L4rqngnKIAUScpAFpeYsZ58gHgB4Ln-LVdOgPyBtchUBIGy6SaMk2vlJ8q2a1Y94NN3sUUD-kVADyj_9LWXDnbS7vmhDa_ciTNVOVdckBLLlpj-xjlJjlVg_4_00IxxCDL4uZwFrT-QZ8EC4mLItnx8swOcMhWqIt-Cn6-LBHM2Fxd0LtyxkTvrNIXOBwBp2PUL5L4YvbT_C-7iciKYxB6-NoAqiNm4IkTuySEaBTc"/>
+                        </div>
+                        <h3 class="font-bold text-center text-sm">The Weeknd</h3>
+                        <p class="text-[11px] text-white/40 text-center uppercase tracking-wider font-bold">Artist</p>
+                    </div>
+                    <div class="group cursor-pointer">
+                        <div class="relative aspect-square mb-4 rounded-full overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-105 ring-1 ring-white/10">
+                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAaFW2Xu3tEySI6tWTT_EVU8Cy2Z0o7p8lp-M3_m6yjX1qZsw77bPL8wJspggEJpdinj9NG7dp-Nk8BHQ0leL1uUmyLaODkj4rh2ougqM5NayA3lBe8f3F18Yx6ZPUvV4flE0UNgyfe7rnScKryR9y0ZlaZameABcRQFeS3JvvY3caKVu4kc-lKQXLrh3fyxu2BdpbcQggtxFDQxVxDg1XGujtxznt48MoUyIP00C6TSGfljFYLbPABqrCpz1UhIJZGethFcNbN6k"/>
+                        </div>
+                        <h3 class="font-bold text-center text-sm">Adele</h3>
+                        <p class="text-[11px] text-white/40 text-center uppercase tracking-wider font-bold">Artist</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 </div>
 
+<!-- Persistent Playback Bar -->
+<footer class="h-28 glass-player px-8 flex items-center justify-between z-50">
+    <!-- Track Info -->
+    <div class="flex items-center gap-5 w-1/4">
+        <div class="relative group cursor-pointer">
+            <img class="w-16 h-16 rounded-xl object-cover shadow-2xl ring-1 ring-white/10 group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG7-dRQv7UEtyykAt_u-BZrBLCmGp2GxyIpo4THuUMmrt7GgtKmyD1Tgh9dbq6BJZGnzLioJVmLb1NIoSJk29_07OSmCDj49WZsZBOkMx92u84X8HA3YC04XdfUR1k0YhK9MvmtKJYkoBnXyYgFeYd42ePs1LtkgEWg4-3JPPbolzIVxmlDUqylPk_woUdRDC4NaqsbcE-BpyBB1U1Q-cexvVRXEVARFistmMQ50gRP0htSQfZHcC56VQEWjCZXax7mwzxeaOprv8"/>
+            <div class="absolute inset-0 bg-black/40 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-xl">expand_less</span>
+            </div>
+        </div>
+        <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-white truncate hover:underline cursor-pointer tracking-tight">Blinding Lights</p>
+            <p class="text-[11px] font-medium text-white/40 truncate hover:text-white transition-colors cursor-pointer tracking-wide">The Weeknd</p>
+        </div>
+        <button class="text-white/40 hover:text-white transition-all duration-200 hover:scale-110">
+            <span class="material-symbols-outlined text-2xl font-light">favorite</span>
+        </button>
+    </div>
+    
+    <!-- Playback Controls -->
+    <div class="flex flex-col items-center max-w-[40%] w-full gap-3">
+        <div class="flex items-center gap-8">
+            <button class="text-white/30 hover:text-white transition-all duration-200">
+                <span class="material-symbols-outlined text-2xl font-light">shuffle</span>
+            </button>
+            <button class="text-white/60 hover:text-white transition-all duration-200">
+                <span class="material-symbols-outlined text-3xl font-light">skip_previous</span>
+            </button>
+            <button class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-xl">
+                <span class="material-symbols-outlined text-3xl fill-1">pause</span>
+            </button>
+            <button class="text-white/60 hover:text-white transition-all duration-200">
+                <span class="material-symbols-outlined text-3xl font-light">skip_next</span>
+            </button>
+            <button class="text-white/30 hover:text-white transition-all duration-200">
+                <span class="material-symbols-outlined text-2xl font-light">repeat</span>
+            </button>
+        </div>
+        <div class="flex items-center gap-4 w-full px-4">
+            <span class="text-[10px] text-white/30 font-bold w-10 text-right">2:14</span>
+            <div class="flex-1 h-1.5 bg-white/10 rounded-full relative group cursor-pointer overflow-hidden">
+                <div class="absolute left-0 top-0 h-full bg-white group-hover:bg-accent transition-colors" style="width: 65%;"></div>
+            </div>
+            <span class="text-[10px] text-white/30 font-bold w-10">3:22</span>
+        </div>
+    </div>
+    
+    <!-- Volume & Extras -->
+    <div class="flex items-center justify-end gap-5 w-1/4">
+        <button class="text-white/40 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-xl font-light">lyrics</span>
+        </button>
+        <button class="text-white/40 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-xl font-light">playlist_play</span>
+        </button>
+        <div class="flex items-center gap-3 group w-32">
+            <span class="material-symbols-outlined text-white/40 text-xl font-light group-hover:text-white">volume_up</span>
+            <div class="flex-1 h-1 bg-white/10 rounded-full relative cursor-pointer overflow-hidden">
+                <div class="absolute left-0 top-0 h-full bg-white group-hover:bg-accent transition-colors" style="width: 70%;"></div>
+            </div>
+        </div>
+        <button class="text-white/40 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-xl font-light">fullscreen</span>
+        </button>
+    </div>
+</footer>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Simple auth check simulation
+        // Authenticate Dashboard using JWT
         const token = localStorage.getItem('moodwave_token');
         if (!token) {
             window.location.href = '/login'; // Redirect to login if not authenticated
         } else {
-            // Very basic decode of JWT to grab name (for UI only)
+            // Very basic decode of JWT to grab name
             try {
                 const payloadStr = atob(token.split('.')[1]);
                 const payload = JSON.parse(payloadStr);
-                document.getElementById('user-display').textContent = `Hello, ${payload.email.split('@')[0]}`;
+                const userName = payload.email.split('@')[0];
+                document.getElementById('header-user-name').textContent = userName;
+                document.getElementById('sidebar-user-name').textContent = userName;
             } catch(e) { /* ignore */ }
         }
 
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            localStorage.removeItem('moodwave_token');
-            window.location.href = '/login';
-        });
+        // Logic to completely Log out
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('moodwave_token');
+                window.location.href = '/login';
+            });
+        }
 
         // Dynamic Click Effect Logic
         function createParticle(x, y) {
@@ -171,7 +459,8 @@
         }
 
         document.addEventListener('click', function(e) {
-            if(e.target.closest('button') || e.target.closest('a')) return; // Skip effects on buttons to prevent annoying UI
+            // Prevent ripples over interactive elements
+            if(e.target.closest('button') || e.target.closest('a') || e.target.closest('input')) return;
             
             // Ripple
             const ripple = document.createElement('div');
