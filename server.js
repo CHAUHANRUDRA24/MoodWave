@@ -25,6 +25,11 @@ app.get('/reset-password', (req, res) => {
     res.sendFile(path.join(__dirname, 'reset-password.html'));
 });
 
+// Serve the reset success page
+app.get('/reset-success', (req, res) => {
+    res.sendFile(path.join(__dirname, 'reset-success.html'));
+});
+
 // Authentication endpoint
 app.post('/api/signup', async (req, res) => {
     try {
