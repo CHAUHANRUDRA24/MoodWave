@@ -97,7 +97,7 @@
                 <span class="w-px h-3 bg-white/10"></span>
                 <span>Node.js backend</span>
             </div>
-            <p class="text-slate-400 text-sm">Already a member? <a class="text-primary font-semibold hover:underline" href="#">Log in</a></p>
+            <p class="text-slate-400 text-sm">Already a member? <a class="text-primary font-semibold hover:underline" href="/login">Log in</a></p>
         </div>
     </header>
 
@@ -288,7 +288,8 @@
             submitBtn.disabled = true;
 
             try {
-                // Here we would typically send a request to a Node.js backend
+                // Send request to the Node.js backend
+                // (Assuming server is running on the correct port)
                 const response = await fetch('/api/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -298,18 +299,18 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    showAlert('Account created successfully! Welcome to the wave.', 'success');
+                    showAlert('Account created successfully! Redirecting to login...', 'success');
                     form.reset();
+                    // Redirect to login page after a short delay
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 1500);
                 } else {
                     showAlert(data.message || 'Something went wrong. Please try again.', 'error');
                 }
             } catch (error) {
                 console.error('Error submitting form:', error);
-                
-                // For demonstration purposes, if the backend isn't running yet we can simulate a success
-                setTimeout(() => {
-                    showAlert('This is a simulated success. Hook up your Node.js backend to make it real!', 'success');
-                }, 1000);
+                showAlert('Could not connect to the server. Please make sure the backend is running.', 'error');
             } finally {
                 // Reset loading state
                 btnText.textContent = 'Start Listening';

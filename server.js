@@ -20,6 +20,16 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Serve the login page
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+// Serve the dashboard page
+app.get('/dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dashboard.html'));
+});
+
 // Serve the reset password page
 app.get('/reset-password', (req, res) => {
     res.sendFile(path.join(__dirname, 'reset-password.html'));
@@ -30,7 +40,7 @@ app.get('/reset-success', (req, res) => {
     res.sendFile(path.join(__dirname, 'reset-success.html'));
 });
 
-// Authentication endpoint
+// Authentication endpoint (Signup)
 app.post('/api/signup', async (req, res) => {
     try {
         const { fullName, email, password } = req.body;
@@ -78,6 +88,49 @@ app.post('/api/signup', async (req, res) => {
         });
     } catch (error) {
         console.error('Signup Error:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
+// Authentication endpoint (Login)
+app.post('/api/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'All fields are required.' });
+        }
+
+        // Check if user exists
+        const user = users.find(u => u.email === email);
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid credentials.' });
+        }
+
+        // Validate password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials.' });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: user.id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.status(200).json({
+            message: 'Logged in successfully',
+            token,
+            user: {
+                id: user.id,
+                fullName: user.fullName,
+                email: user.email
+            }
+        });
+    } catch (error) {
+        console.error('Login Error:', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
