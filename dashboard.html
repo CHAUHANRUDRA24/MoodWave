@@ -460,7 +460,7 @@
 
         document.addEventListener('click', function(e) {
             // Prevent ripples over interactive elements
-            if(e.target.closest('button') || e.target.closest('a') || e.target.closest('input')) return;
+            if(e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('.cursor-pointer')) return;
             
             // Ripple
             const ripple = document.createElement('div');
@@ -475,6 +475,144 @@
             for (let i = 0; i < 8; i++) {
                 createParticle(e.pageX, e.pageY);
             }
+        });
+
+        // ------------------------------------------------------------
+        // --- Dynamic Audio Player Logic ---
+        // ------------------------------------------------------------
+        const player = new Audio();
+        player.crossOrigin = "anonymous";
+        // Dummy royalty-free audio tracks to simulate a real player
+        const dummyAudio = [
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+        ];
+        let currentAudioIndex = 0;
+        let isPlaying = false;
+
+        // Player DOM Elements
+        const playerControls = document.querySelectorAll('footer.glass-player .flex.items-center.gap-8 button');
+        const prevBtn = playerControls[1];
+        const playPauseBtn = playerControls[2];
+        const nextBtn = playerControls[3];
+        const playPauseIcon = playPauseBtn.querySelector('span');
+
+        const playerCover = document.querySelector('footer.glass-player img');
+        const playerTitle = document.querySelector('footer.glass-player .flex-1.min-w-0 p:first-child');
+        const playerArtist = document.querySelector('footer.glass-player .flex-1.min-w-0 p:last-child');
+
+        const timeCont = document.querySelector('footer.glass-player .flex.items-center.gap-4.w-full.px-4');
+        const currentTimeEl = timeCont.querySelector('span:nth-child(1)');
+        const totalTimeEl = timeCont.querySelector('span:nth-child(3)');
+        const progressBar = timeCont.querySelector('div.flex-1');
+        const progressFill = progressBar.querySelector('div');
+
+        const volumeBar = document.querySelector('footer.glass-player .w-32 .flex-1');
+        const volumeFill = volumeBar.querySelector('div');
+
+        // Init Player Time Text
+        currentTimeEl.textContent = "0:00";
+        totalTimeEl.textContent = "0:00";
+        progressFill.style.width = "0%";
+        player.volume = 0.7;
+        volumeFill.style.width = "70%";
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "0:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updatePlayPauseUI() {
+            playPauseIcon.textContent = isPlaying ? 'pause' : 'play_arrow';
+        }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                player.pause();
+                isPlaying = false;
+            } else {
+                if(!player.src) player.src = dummyAudio[0]; // load default
+                player.play().catch(e => console.error("Audio playback failed", e));
+                isPlaying = true;
+            }
+            updatePlayPauseUI();
+        }
+
+        function loadTrackAndPlay(title, artist, coverSrc) {
+            playerTitle.textContent = title;
+            playerArtist.textContent = artist || 'Various Artists';
+            if(coverSrc) playerCover.src = coverSrc;
+            
+            // Pick a random track from dummy array
+            currentAudioIndex = (currentAudioIndex + 1) % dummyAudio.length;
+            player.src = dummyAudio[currentAudioIndex];
+            
+            player.play().then(() => {
+                isPlaying = true;
+                updatePlayPauseUI();
+            }).catch(e => console.log('Playback prevented', e));
+        }
+
+        // Attach events to player Controls
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        
+        nextBtn.addEventListener('click', () => loadTrackAndPlay('Next Track', 'Moodwave Auto', playerCover.src));
+        prevBtn.addEventListener('click', () => loadTrackAndPlay('Previous Track', 'Moodwave Auto', playerCover.src));
+
+        // Time updates
+        player.addEventListener('timeupdate', () => {
+            const current = player.currentTime;
+            const duration = player.duration;
+            currentTimeEl.textContent = formatTime(current);
+            if (duration) {
+                totalTimeEl.textContent = formatTime(duration);
+                const percent = (current / duration) * 100;
+                progressFill.style.width = `${percent}%`;
+            }
+        });
+
+        // Seek
+        progressBar.addEventListener('click', (e) => {
+            const rect = progressBar.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const percent = Math.max(0, Math.min(1, clickX / rect.width));
+            if(player.duration) {
+                player.currentTime = percent * player.duration;
+            }
+        });
+
+        // Volume Seek
+        volumeBar.addEventListener('click', (e) => {
+            const rect = volumeBar.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const percent = Math.max(0, Math.min(1, clickX / rect.width));
+            player.volume = percent;
+            volumeFill.style.width = `${percent * 100}%`;
+        });
+
+        // Hook up ALL play buttons on cards to actually load into the player
+        const allPlayButtons = document.querySelectorAll('main .group button');
+        allPlayButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // prevent other click events
+                const card = btn.closest('.group');
+                if (card) {
+                    let titleEl = card.querySelector('h3') || card.querySelector('p.font-bold, p.flex-1');
+                    let title = titleEl ? titleEl.textContent.trim() : 'Unknown Track';
+                    
+                    let artistEl = card.querySelector('p.text-xs') || null;
+                    let artist = artistEl && artistEl.textContent.trim() !== title ? artistEl.textContent.trim() : 'Various Artists';
+                    
+                    let imgEl = card.querySelector('img');
+                    let coverSrc = imgEl ? imgEl.src : null;
+                    
+                    loadTrackAndPlay(title, artist, coverSrc);
+                }
+            });
         });
     });
 </script>
