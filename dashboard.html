@@ -168,6 +168,37 @@
 
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col overflow-hidden relative">
+        <!-- Floating Now Playing Detail View -->
+        <div id="now-playing-panel" class="absolute right-8 top-28 w-80 glass rounded-3xl z-40 overflow-hidden shadow-2xl border border-white/10 animate-in fade-in slide-in-from-right-8 duration-500 hidden">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-white/40">Now Playing</span>
+                    <button id="close-panel-btn" class="text-white/40 hover:text-white transition-colors cursor-pointer z-50">
+                        <span class="material-symbols-outlined text-xl">close</span>
+                    </button>
+                </div>
+                <div class="relative aspect-square mb-6 rounded-2xl overflow-hidden shadow-2xl group">
+                    <img id="panel-cover" alt="Detail Art" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG7-dRQv7UEtyykAt_u-BZrBLCmGp2GxyIpo4THuUMmrt7GgtKmyD1Tgh9dbq6BJZGnzLioJVmLb1NIoSJk29_07OSmCDj49WZsZBOkMx92u84X8HA3YC04XdfUR1k0YhK9MvmtKJYkoBnXyYgFeYd42ePs1LtkgEWg4-3JPPbolzIVxmlDUqylPk_woUdRDC4NaqsbcE-BpyBB1U1Q-cexvVRXEVARFistmMQ50gRP0htSQfZHcC56VQEWjCZXax7mwzxeaOprv8"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+                </div>
+                <div class="mb-6">
+                    <h3 id="panel-title" class="text-xl font-bold tracking-tight mb-1">Blinding Lights</h3>
+                    <p id="panel-artist" class="text-sm text-white/60 font-medium">The Weeknd</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="p-4 rounded-2xl bg-white/5 border border-white/5">
+                        <p class="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">Up Next</p>
+                        <div class="flex items-center gap-3">
+                            <img alt="Next Track" class="w-10 h-10 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDicDFaoOa4xTyf5VbIgyAYa3HhMXk_ww9QFvw4Ybvk9Vz00g047s4dKq81Js-Jmt9fYFiTs-SqAhi9QkCf4PgNTp9S7tUDcAE_fcrQrc6f78j3IdBUMTTc6Yq4O8uIeNcAK6p60SPCQRKdbqvVgTIn8IJ4eupNtnUL0LWQE4_28SVVEa2OfKibEoPHcT37bzGGfgwDNbcafMf6sCkza6r1fV0pS8R26zaZvvbVc6CSk5_DKU19qXVeNT3qBqsr60uaq15qGzjYLbQ"/>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-bold truncate">Save Your Tears</p>
+                                <p class="text-[10px] text-white/40">Moodwave Auto</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Top Bar -->
         <header class="flex items-center justify-between px-8 py-6 sticky top-0 z-40 glass-header">
             <div class="flex items-center gap-6">
@@ -343,7 +374,7 @@
 <footer class="h-28 glass-player px-8 flex items-center justify-between z-50">
     <!-- Track Info -->
     <div class="flex items-center gap-5 w-1/4">
-        <div class="relative group cursor-pointer">
+        <div class="relative group cursor-pointer" id="toggle-panel-btn">
             <img class="w-16 h-16 rounded-xl object-cover shadow-2xl ring-1 ring-white/10 group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG7-dRQv7UEtyykAt_u-BZrBLCmGp2GxyIpo4THuUMmrt7GgtKmyD1Tgh9dbq6BJZGnzLioJVmLb1NIoSJk29_07OSmCDj49WZsZBOkMx92u84X8HA3YC04XdfUR1k0YhK9MvmtKJYkoBnXyYgFeYd42ePs1LtkgEWg4-3JPPbolzIVxmlDUqylPk_woUdRDC4NaqsbcE-BpyBB1U1Q-cexvVRXEVARFistmMQ50gRP0htSQfZHcC56VQEWjCZXax7mwzxeaOprv8"/>
             <div class="absolute inset-0 bg-black/40 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <span class="material-symbols-outlined text-white text-xl">expand_less</span>
@@ -512,6 +543,14 @@
         const volumeBar = document.querySelector('footer.glass-player .w-32 .flex-1');
         const volumeFill = volumeBar.querySelector('div');
 
+        // Panel DOM Elements
+        const nowPlayingPanel = document.getElementById('now-playing-panel');
+        const togglePanelBtn = document.getElementById('toggle-panel-btn');
+        const closePanelBtn = document.getElementById('close-panel-btn');
+        const panelCover = document.getElementById('panel-cover');
+        const panelTitle = document.getElementById('panel-title');
+        const panelArtist = document.getElementById('panel-artist');
+
         // Init Player Time Text
         currentTimeEl.textContent = "0:00";
         totalTimeEl.textContent = "0:00";
@@ -545,7 +584,12 @@
         function loadTrackAndPlay(title, artist, coverSrc) {
             playerTitle.textContent = title;
             playerArtist.textContent = artist || 'Various Artists';
-            if(coverSrc) playerCover.src = coverSrc;
+            if(panelTitle) panelTitle.textContent = title;
+            if(panelArtist) panelArtist.textContent = artist || 'Various Artists';
+            if(coverSrc) {
+                playerCover.src = coverSrc;
+                if(panelCover) panelCover.src = coverSrc;
+            }
             
             // Pick a random track from dummy array
             currentAudioIndex = (currentAudioIndex + 1) % dummyAudio.length;
@@ -562,6 +606,18 @@
         
         nextBtn.addEventListener('click', () => loadTrackAndPlay('Next Track', 'Moodwave Auto', playerCover.src));
         prevBtn.addEventListener('click', () => loadTrackAndPlay('Previous Track', 'Moodwave Auto', playerCover.src));
+
+        // Attach events to Panel toggles
+        if (togglePanelBtn) {
+            togglePanelBtn.addEventListener('click', () => {
+                nowPlayingPanel.classList.toggle('hidden');
+            });
+        }
+        if (closePanelBtn) {
+            closePanelBtn.addEventListener('click', () => {
+                nowPlayingPanel.classList.add('hidden');
+            });
+        }
 
         // Time updates
         player.addEventListener('timeupdate', () => {
