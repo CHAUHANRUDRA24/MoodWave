@@ -122,15 +122,15 @@
             <nav class="space-y-6">
                 <div class="space-y-3">
                     <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-white/30 px-3">Discover</p>
-                    <a class="flex items-center gap-4 px-3 py-2 text-white bg-white/5 rounded-lg transition-all duration-200 group" href="#">
+                    <a id="tab-home" class="nav-tab flex items-center gap-4 px-3 py-2 text-white bg-white/5 rounded-lg transition-all duration-200 group cursor-pointer">
                         <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1">home</span>
                         <span class="text-sm font-medium">Home</span>
                     </a>
-                    <a class="flex items-center gap-4 px-3 py-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group" href="#">
+                    <a id="tab-search" class="nav-tab flex items-center gap-4 px-3 py-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group cursor-pointer">
                         <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">search</span>
                         <span class="text-sm font-medium">Search</span>
                     </a>
-                    <a class="flex items-center gap-4 px-3 py-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group" href="#">
+                    <a id="tab-library" class="nav-tab flex items-center gap-4 px-3 py-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group cursor-pointer">
                         <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">library_music</span>
                         <span class="text-sm font-medium">Your Library</span>
                     </a>
@@ -231,8 +231,11 @@
 
         <!-- Scrollable Content -->
         <div class="flex-1 overflow-y-auto px-12 pb-40 custom-scrollbar">
-            <section class="mt-8">
-                <h1 class="text-4xl font-extrabold tracking-tight mb-8">Good morning</h1>
+            
+            <!-- HOME VIEW -->
+            <div id="view-home" class="tab-content animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <section class="mt-8">
+                    <h1 class="text-4xl font-extrabold tracking-tight mb-8">Good morning</h1>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="group flex items-center bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer pr-4">
                         <div class="size-20 shadow-lg">
@@ -366,6 +369,80 @@
                     </div>
                 </div>
             </section>
+            </div> <!-- End Home View -->
+
+            <!-- SEARCH VIEW -->
+            <div id="view-search" class="tab-content animate-in fade-in slide-in-from-bottom-4 duration-500 hidden pt-8">
+                <h1 class="text-4xl font-extrabold tracking-tight mb-8">Search</h1>
+                <div class="relative max-w-2xl mb-12">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/40 text-2xl">search</span>
+                    <input type="text" class="w-full bg-white/5 border border-white/10 rounded-full py-4 pl-12 pr-6 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary/50 text-lg transition-all" placeholder="What do you want to listen to?">
+                </div>
+                <h2 class="text-2xl font-bold tracking-tight mb-6">Browse all</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                    <div class="aspect-square rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 p-4 relative overflow-hidden group cursor-pointer shadow-lg hover:shadow-pink-500/20 transition-all hover:scale-105">
+                        <span class="font-bold text-xl relative z-10 drop-shadow-md">Pop</span>
+                    </div>
+                    <div class="aspect-square rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 p-4 relative overflow-hidden group cursor-pointer shadow-lg hover:shadow-cyan-500/20 transition-all hover:scale-105">
+                        <span class="font-bold text-xl relative z-10 drop-shadow-md">Hip-Hop</span>
+                    </div>
+                    <div class="aspect-square rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 p-4 relative overflow-hidden group cursor-pointer shadow-lg hover:shadow-amber-500/20 transition-all hover:scale-105">
+                        <span class="font-bold text-xl relative z-10 drop-shadow-md">Rock</span>
+                    </div>
+                    <div class="aspect-square rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-4 relative overflow-hidden group cursor-pointer shadow-lg hover:shadow-emerald-500/20 transition-all hover:scale-105">
+                        <span class="font-bold text-xl relative z-10 drop-shadow-md">Podcasts</span>
+                    </div>
+                    <div class="aspect-square rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 p-4 relative overflow-hidden group cursor-pointer shadow-lg hover:shadow-purple-500/20 transition-all hover:scale-105">
+                        <span class="font-bold text-xl relative z-10 drop-shadow-md">New Releases</span>
+                    </div>
+                </div>
+            </div> <!-- End Search View -->
+
+            <!-- LIBRARY VIEW -->
+            <div id="view-library" class="tab-content animate-in fade-in slide-in-from-bottom-4 duration-500 hidden pt-8">
+                <div class="flex items-center gap-6 mb-8">
+                    <div class="size-32 rounded-full shadow-2xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-500 ring-4 ring-white/10">
+                        <span class="material-symbols-outlined text-white text-6xl">favorite</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold uppercase tracking-widest text-white/50 mb-1">Playlist</p>
+                        <h1 class="text-5xl font-extrabold tracking-tight mb-2">Liked Songs</h1>
+                        <p class="text-sm text-white/60">Alex Rivera • 428 songs</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-6 mb-8 mt-6">
+                    <button class="size-14 rounded-full bg-green-500 text-black flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-xl shadow-green-500/20">
+                        <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                    </button>
+                </div>
+
+                <div class="w-full">
+                    <div class="flex items-center px-4 py-2 border-b border-white/10 text-[11px] font-bold uppercase tracking-widest text-white/40 mb-4">
+                        <div class="w-12 text-center">#</div>
+                        <div class="flex-1">Title</div>
+                        <div class="flex-1 hidden md:block">Album</div>
+                        <div class="w-24 text-right">Time</div>
+                    </div>
+
+                    <div class="group flex items-center px-4 py-3 hover:bg-white/5 rounded-xl transition-colors cursor-pointer">
+                        <div class="w-12 text-center text-white/40 font-medium group-hover:hidden">1</div>
+                        <div class="w-12 text-center hidden group-hover:flex items-center justify-center text-white">
+                            <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                        </div>
+                        <div class="flex-1 flex items-center gap-4">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG7-dRQv7UEtyykAt_u-BZrBLCmGp2GxyIpo4THuUMmrt7GgtKmyD1Tgh9dbq6BJZGnzLioJVmLb1NIoSJk29_07OSmCDj49WZsZBOkMx92u84X8HA3YC04XdfUR1k0YhK9MvmtKJYkoBnXyYgFeYd42ePs1LtkgEWg4-3JPPbolzIVxmlDUqylPk_woUdRDC4NaqsbcE-BpyBB1U1Q-cexvVRXEVARFistmMQ50gRP0htSQfZHcC56VQEWjCZXax7mwzxeaOprv8" class="size-10 rounded object-cover">
+                            <div>
+                                <p class="text-white font-bold text-sm group-hover:text-green-400 transition-colors">Blinding Lights</p>
+                                <p class="text-white/60 text-[11px]">The Weeknd</p>
+                            </div>
+                        </div>
+                        <div class="flex-1 hidden md:block text-sm text-white/60">After Hours</div>
+                        <div class="w-24 text-right text-sm text-white/60 pr-4">3:22</div>
+                    </div>
+                </div>
+            </div> <!-- End Library View -->
+
         </div>
     </main>
 </div>
@@ -506,6 +583,36 @@
             for (let i = 0; i < 8; i++) {
                 createParticle(e.pageX, e.pageY);
             }
+        });
+
+        // ------------------------------------------------------------
+        // --- Sidebar Tab Logic ---
+        // ------------------------------------------------------------
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active classes
+                navTabs.forEach(t => {
+                    t.classList.remove('bg-white/5', 'text-white');
+                    t.classList.add('text-white/60');
+                    t.querySelector('span:first-child').style.fontVariationSettings = "'FILL' 0";
+                });
+                
+                // Add active class to clicked tab
+                tab.classList.remove('text-white/60');
+                tab.classList.add('bg-white/5', 'text-white');
+                tab.querySelector('span:first-child').style.fontVariationSettings = "'FILL' 1";
+
+                // Hide all views
+                tabContents.forEach(content => content.classList.add('hidden'));
+
+                // Show target view
+                const targetId = tab.id.replace('tab-', 'view-');
+                const targetView = document.getElementById(targetId);
+                if (targetView) targetView.classList.remove('hidden');
+            });
         });
 
         // ------------------------------------------------------------
