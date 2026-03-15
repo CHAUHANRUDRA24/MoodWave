@@ -116,9 +116,12 @@
                             <label for="password" class="text-xs font-semibold uppercase tracking-wider text-slate-400">Password</label>
                             <a href="/reset-password" class="text-xs text-primary hover:underline font-medium">Forgot?</a>
                         </div>
-                        <div class="relative">
-                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">lock</span>
-                            <input id="password" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="••••••••" type="password"/>
+                        <div class="relative group">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl group-focus-within:text-primary transition-colors">lock</span>
+                            <input id="password" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-12 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="••••••••" type="password"/>
+                            <button type="button" class="toggle-password absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors">
+                                <span class="material-symbols-outlined text-xl">visibility</span>
+                            </button>
                         </div>
                     </div>
 
@@ -206,6 +209,21 @@
                 btnSpinner.classList.add('hidden');
                 submitBtn.disabled = false;
             }
+        });
+
+        // Password Visibility Toggle
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = btn.parentElement.querySelector('input');
+                const icon = btn.querySelector('span');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.textContent = 'visibility_off';
+                } else {
+                    input.type = 'password';
+                    icon.textContent = 'visibility';
+                }
+            });
         });
 
         // Dynamic Click Effect Logic
