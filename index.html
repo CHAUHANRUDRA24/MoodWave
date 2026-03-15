@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Moodwave - Signup Page | Full Stack Music Experience</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1DB954",
+                        "background-light": "#000000",
+                        "background-dark": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .bg-gradient-mesh {
+            background-color: #000000;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100 selection:bg-primary/30">
+<div class="relative min-h-screen w-full flex flex-col items-center justify-center bg-gradient-mesh p-4 md:p-8 overflow-x-hidden">
+    <!-- Header -->
+    <header class="absolute top-0 left-0 w-full px-6 py-6 md:px-12 flex items-center justify-between z-20">
+        <div class="flex items-center gap-3">
+            <div class="bg-primary p-1.5 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+                <span class="material-symbols-outlined text-white text-2xl">waves</span>
+            </div>
+            <div class="flex flex-col">
+                <h1 class="text-xl font-black tracking-tighter text-slate-100 leading-none">MOODWAVE</h1>
+                <span class="text-[10px] text-primary font-bold tracking-[0.2em] uppercase">Full Stack Player</span>
+            </div>
+        </div>
+        <div class="hidden md:flex items-center gap-6">
+            <div class="flex items-center gap-4 px-4 py-2 bg-white/5 rounded-full border border-white/10 text-[11px] font-medium tracking-wide text-slate-400">
+                <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> React frontend</span>
+                <span class="w-px h-3 bg-white/10"></span>
+                <span>Node.js backend</span>
+            </div>
+            <p class="text-slate-400 text-sm">Already a member? <a class="text-primary font-semibold hover:underline" href="#">Log in</a></p>
+        </div>
+    </header>
+
+    <main class="w-full max-w-6xl z-10 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20">
+        <!-- Project Info Section -->
+        <div class="hidden lg:flex flex-col max-w-md space-y-8 animate-float">
+            <div>
+                <h2 class="text-4xl font-extrabold text-white mb-4 leading-tight">Elevate your <br/><span class="text-primary">Music Experience</span></h2>
+                <p class="text-slate-400 text-lg">A robust Spotify-like application powered by a modern full-stack architecture.</p>
+            </div>
+            <div class="space-y-4">
+                <div class="flex items-start gap-4 p-4 glass-panel rounded-2xl">
+                    <div class="bg-primary/20 p-2 rounded-xl text-primary">
+                        <span class="material-symbols-outlined">shield_lock</span>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-sm">JWT Authentication</h3>
+                        <p class="text-slate-500 text-xs mt-1">Secure user registration and login powered by Node.js &amp; Express.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 glass-panel rounded-2xl">
+                    <div class="bg-primary/20 p-2 rounded-xl text-primary">
+                        <span class="material-symbols-outlined">play_circle</span>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-sm">Music Player Controls</h3>
+                        <p class="text-slate-500 text-xs mt-1">Seamless play, pause, and playlist management with React hooks.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 glass-panel rounded-2xl">
+                    <div class="bg-primary/20 p-2 rounded-xl text-primary">
+                        <span class="material-symbols-outlined">database</span>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-sm">Cloud Storage &amp; DB</h3>
+                        <p class="text-slate-500 text-xs mt-1">High-quality music hosting with Cloudinary and MongoDB database.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Form -->
+        <div class="w-full max-w-[480px]">
+            <div class="glass-panel rounded-3xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
+                <!-- Tech Badge -->
+                <div class="absolute -right-12 -top-12 w-32 h-32 bg-primary/10 rounded-full blur-2xl"></div>
+                
+                <div class="mb-8 text-center md:text-left relative z-10">
+                    <h2 class="text-3xl font-bold tracking-tight text-white mb-2">Join the wave</h2>
+                    <p class="text-slate-400">Experience sound powered by Node.js &amp; React.</p>
+                </div>
+                
+                <form class="space-y-5 relative z-10">
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Full Name</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">person</span>
+                            <input class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="Alex Rivera" type="text"/>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Email Address</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">mail</span>
+                            <input class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="alex@moodwave.io" type="email"/>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Password</label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">lock</span>
+                                <input class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="••••••••" type="password"/>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Confirm</label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">shield_lock</span>
+                                <input class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="••••••••" type="password"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] mt-4" type="button">
+                        Start Listening
+                    </button>
+                </form>
+                
+                <div class="relative my-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-white/10"></div>
+                    </div>
+                    <div class="relative flex justify-center text-xs uppercase">
+                        <span class="bg-black/40 backdrop-blur px-4 text-slate-500 tracking-widest">Or join with</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 relative z-10">
+                    <button class="flex items-center justify-center gap-2 py-3 px-4 glass-panel hover:bg-white/10 rounded-xl text-white transition-all">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+                        </svg>
+                        <span class="text-sm font-semibold">Google</span>
+                    </button>
+                    <button class="flex items-center justify-center gap-2 py-3 px-4 glass-panel hover:bg-white/10 rounded-xl text-white transition-all">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+                        </svg>
+                        <span class="text-sm font-semibold">Facebook</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center text-xs text-slate-500 px-4">
+                By signing up, you agree to our <a class="text-slate-300 underline underline-offset-2" href="#">Terms of Service</a> and <a class="text-slate-300 underline underline-offset-2" href="#">Privacy Policy</a>.
+            </div>
+        </div>
+    </main>
+
+    <footer class="absolute bottom-6 w-full px-6 flex flex-col md:flex-row items-center justify-between text-slate-600 text-[10px] tracking-widest uppercase gap-4">
+        <div>© 2024 Moodwave Music Inc. All rights reserved.</div>
+        <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-primary">code</span> MongoDB Stack</span>
+            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-primary">storage</span> Cloudinary Assets</span>
+        </div>
+    </footer>
+
+    <!-- Background Decoration -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full opacity-50"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/5 blur-[120px] rounded-full opacity-30"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[160px] rounded-full"></div>
+    </div>
+</div>
+</body>
+</html>
