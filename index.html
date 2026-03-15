@@ -118,42 +118,46 @@
                     <p class="text-slate-400">Experience sound powered by Node.js &amp; React.</p>
                 </div>
                 
-                <form class="space-y-5 relative z-10">
+                <form id="signup-form" class="space-y-5 relative z-10">
                     <div class="space-y-2">
-                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Full Name</label>
+                        <label for="fullName" class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Full Name</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">person</span>
-                            <input class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="Alex Rivera" type="text"/>
+                            <input id="fullName" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="Alex Rivera" type="text"/>
                         </div>
                     </div>
                     
                     <div class="space-y-2">
-                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Email Address</label>
+                        <label for="email" class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Email Address</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">mail</span>
-                            <input class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="alex@moodwave.io" type="email"/>
+                            <input id="email" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="alex@moodwave.io" type="email"/>
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Password</label>
+                            <label for="password" class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Password</label>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">lock</span>
-                                <input class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="••••••••" type="password"/>
+                                <input id="password" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="••••••••" type="password"/>
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Confirm</label>
+                            <label for="confirmPassword" class="text-xs font-semibold uppercase tracking-wider text-slate-400 ml-1">Confirm</label>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">shield_lock</span>
-                                <input class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="••••••••" type="password"/>
+                                <input id="confirmPassword" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="••••••••" type="password"/>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Alert message container -->
+                    <div id="alert-message" class="hidden text-sm font-medium py-3 px-4 rounded-xl"></div>
                     
-                    <button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] mt-4" type="button">
-                        Start Listening
+                    <button id="submit-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] mt-4 flex justify-center items-center gap-2" type="submit">
+                        <span id="btn-text">Start Listening</span>
+                        <div id="btn-spinner" class="hidden w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                     </button>
                 </form>
                 
@@ -206,5 +210,82 @@
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[160px] rounded-full"></div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('signup-form');
+        const alertMessage = document.getElementById('alert-message');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnSpinner = document.getElementById('btn-spinner');
+
+        function showAlert(message, type) {
+            alertMessage.textContent = message;
+            alertMessage.className = `text-sm font-medium py-3 px-4 rounded-xl mb-4 ${
+                type === 'error' ? 'bg-red-500/20 text-red-200 border border-red-500/50' : 
+                'bg-green-500/20 text-green-200 border border-green-500/50'
+            }`;
+            alertMessage.classList.remove('hidden');
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Hide previous alerts
+            alertMessage.classList.add('hidden');
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Basic Validation
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match.', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('Password must be at least 6 characters long.', 'error');
+                return;
+            }
+
+            // Set loading state
+            btnText.textContent = 'Creating Account...';
+            btnSpinner.classList.remove('hidden');
+            submitBtn.disabled = true;
+
+            try {
+                // Here we would typically send a request to a Node.js backend
+                const response = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fullName, email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('Account created successfully! Welcome to the wave.', 'success');
+                    form.reset();
+                } else {
+                    showAlert(data.message || 'Something went wrong. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                
+                // For demonstration purposes, if the backend isn't running yet we can simulate a success
+                setTimeout(() => {
+                    showAlert('This is a simulated success. Hook up your Node.js backend to make it real!', 'success');
+                }, 1000);
+            } finally {
+                // Reset loading state
+                btnText.textContent = 'Start Listening';
+                btnSpinner.classList.add('hidden');
+                submitBtn.disabled = false;
+            }
+        });
+    });
+</script>
 </body>
 </html>
