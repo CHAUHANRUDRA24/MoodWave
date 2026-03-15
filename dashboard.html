@@ -137,13 +137,13 @@
                 </div>
                 <div class="space-y-3">
                     <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-white/30 px-3">Your Collection</p>
-                    <button class="flex items-center gap-4 px-3 py-2 w-full text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group">
+                    <button id="btn-create-playlist" class="flex items-center gap-4 px-3 py-2 w-full text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group">
                         <div class="w-6 h-6 flex items-center justify-center bg-white/10 rounded group-hover:bg-white group-hover:text-black transition-colors">
                             <span class="material-symbols-outlined text-sm">add</span>
                         </div>
                         <span class="text-sm font-medium">Create Playlist</span>
                     </button>
-                    <button class="flex items-center gap-4 px-3 py-2 w-full text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group">
+                    <button id="btn-liked-songs" class="flex items-center gap-4 px-3 py-2 w-full text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 group">
                         <div class="w-6 h-6 flex items-center justify-center bg-gradient-to-br from-blue-500/80 to-purple-500/80 rounded shadow-lg shadow-blue-500/20">
                             <span class="material-symbols-outlined text-sm text-white fill-1">favorite</span>
                         </div>
@@ -614,6 +614,21 @@
                 if (targetView) targetView.classList.remove('hidden');
             });
         });
+
+        // Additional sidebar button logic
+        const likedSongsBtn = document.getElementById('btn-liked-songs');
+        if (likedSongsBtn) {
+            likedSongsBtn.addEventListener('click', () => {
+                document.getElementById('tab-library').click();
+            });
+        }
+
+        const createPlaylistBtn = document.getElementById('btn-create-playlist');
+        if (createPlaylistBtn) {
+            createPlaylistBtn.addEventListener('click', () => {
+                alert('Create Playlist feature coming soon! You will be able to organize your favorite tracks into personalized collections.');
+            });
+        }
 
         // ------------------------------------------------------------
         // --- Dynamic Audio Player Logic ---
