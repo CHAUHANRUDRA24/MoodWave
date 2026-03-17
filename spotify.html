@@ -17,8 +17,23 @@
     --border: rgba(255,255,255,0.08);
     --text: #ffffff;
     --muted: rgba(255,255,255,0.45);
-    --player-h: 88px;
+    --player-h: 90px;
   }
+  .nav-tab {
+    display: flex; align-items: center; gap: 16px;
+    width: 100%; padding: 12px 16px; border: none; background: none;
+    color: var(--muted); font-size: 14px; font-weight: 700; cursor: pointer;
+    border-radius: 8px; transition: all .2s; text-align: left;
+  }
+  .nav-tab:hover { color: #fff; }
+  .nav-tab.active { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-tab .material-symbols-outlined { font-size: 24px; }
+  .sidebar-link { font-size: 14px; color: var(--muted); text-decoration: none; padding: 4px 12px; border-radius: 4px; transition: color .2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sidebar-link:hover { color: #fff; }
+  .btn-heart { background: none; border: none; color: var(--muted); cursor: pointer; display: flex; align-items: center; transition: all .2s; }
+  .btn-heart.active { color: var(--green); font-variation-settings: 'FILL' 1; }
+  .btn-heart:hover { transform: scale(1.1); color: #fff; }
+  .btn-heart.active:hover { color: var(--green); }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
@@ -294,58 +309,91 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
-  <main>
-    <!-- Profile Hero -->
-    <div class="profile-hero" id="profile-hero" style="display:none">
-      <div id="profile-img-container"></div>
-      <div class="profile-info">
-        <h2 id="profile-name">Loading...</h2>
-        <p id="profile-email" style="color:var(--muted);font-size:14px"></p>
-        <div>
-          <span class="profile-stat"><span class="material-symbols-outlined">music_note</span><span id="profile-followers">—</span> Followers</span>
-          <span class="profile-stat"><span class="material-symbols-outlined">verified</span><span id="profile-plan">Free</span></span>
-          <span class="profile-stat" style="cursor:pointer" onclick="window.open('https://open.spotify.com','_blank')"><span class="material-symbols-outlined">open_in_new</span>Open Spotify</span>
-        </div>
+  <!-- Sidebar / Tabs -->
+  <div style="display:flex; flex:1; overflow:hidden;">
+    <aside style="width:240px; background:var(--bg2); border-right:1px solid var(--border); padding:24px 12px; display:flex; flex-direction:column; gap:8px;">
+      <button class="nav-tab active" data-tab="home">
+        <span class="material-symbols-outlined">home</span> Home
+      </button>
+      <button class="nav-tab" data-tab="liked">
+        <span class="material-symbols-outlined">favorite</span> Liked Songs
+      </button>
+      <button class="nav-tab" data-tab="playlists">
+        <span class="material-symbols-outlined">library_music</span> Your Playlists
+      </button>
+      <div style="margin-top:20px; padding:0 12px; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">Playlists</div>
+      <div id="sidebar-playlists" style="display:flex; flex-direction:column; gap:4px; margin-top:8px; overflow-y:auto;">
+        <!-- Playlists will load here -->
       </div>
-    </div>
+    </aside>
 
-    <!-- Search Results Section -->
-    <div id="search-section">
-      <div class="section">
-        <div class="section-header">
-          <h2 class="section-title">🔍 Search Results</h2>
-          <span class="section-sub" onclick="clearSearch()">Clear</span>
-        </div>
-        <div id="search-results" class="search-results-grid"></div>
-      </div>
-    </div>
-
-    <!-- Home Sections -->
-    <div id="home-sections">
-      <!-- Top Tracks -->
-      <div class="section">
-        <div class="section-header">
-          <h2 class="section-title">🎵 Your Top Tracks</h2>
-          <div class="pill-tabs">
-            <button class="pill-tab active" data-range="short_term">4 Weeks</button>
-            <button class="pill-tab" data-range="medium_term">6 Months</button>
-            <button class="pill-tab" data-range="long_term">All Time</button>
-          </div>
-        </div>
-        <div id="top-tracks-list" class="track-list">
-          <!-- Skeleton -->
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div class="skeleton" style="height:64px;border-radius:10px"></div>
-            <div class="skeleton" style="height:64px;border-radius:10px"></div>
-            <div class="skeleton" style="height:64px;border-radius:10px"></div>
-            <div class="skeleton" style="height:64px;border-radius:10px"></div>
-            <div class="skeleton" style="height:64px;border-radius:10px"></div>
+    <!-- Main Content Area -->
+    <main style="flex:1; overflow-y:auto; padding:40px 32px 32px; max-width:1200px; margin:0 auto; width:100%;">
+      <!-- Profile Hero -->
+      <div class="profile-hero" id="profile-hero" style="display:none">
+        <div id="profile-img-container"></div>
+        <div class="profile-info">
+          <h2 id="profile-name">Loading...</h2>
+          <p id="profile-email" style="color:var(--muted);font-size:14px"></p>
+          <div>
+            <span class="profile-stat"><span class="material-symbols-outlined">music_note</span><span id="profile-followers">—</span> Followers</span>
+            <span class="profile-stat"><span class="material-symbols-outlined">verified</span><span id="profile-plan">Free</span></span>
           </div>
         </div>
       </div>
-    </div>
-  </main>
+
+      <!-- Search Results Section -->
+      <div id="search-section" style="display:none">
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">🔍 Search Results</h2>
+            <span class="section-sub" onclick="clearSearch()">Clear</span>
+          </div>
+          <div id="search-results" class="search-results-grid"></div>
+        </div>
+      </div>
+
+      <!-- Content Tabs -->
+      <div id="tab-home" class="tab-content" style="display:block">
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">⏱️ Recently Played</h2>
+          </div>
+          <div id="recent-tracks-list" class="track-list"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">🎵 Your Top Tracks</h2>
+            <div class="pill-tabs">
+              <button class="pill-tab active" data-range="short_term">4 Weeks</button>
+              <button class="pill-tab" data-range="medium_term">6 Months</button>
+              <button class="pill-tab" data-range="long_term">All Time</button>
+            </div>
+          </div>
+          <div id="top-tracks-list" class="track-list"></div>
+        </div>
+      </div>
+
+      <div id="tab-liked" class="tab-content" style="display:none">
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">❤️ Liked Songs</h2>
+          </div>
+          <div id="liked-songs-list" class="track-list"></div>
+        </div>
+      </div>
+
+      <div id="tab-playlists" class="tab-content" style="display:none">
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">📚 Your Playlists</h2>
+          </div>
+          <div id="playlists-grid" class="search-results-grid"></div>
+        </div>
+      </div>
+    </main>
+  </div>
 </div>
 
 <!-- ══════════ BOTTOM PLAYER ══════════ -->
@@ -433,10 +481,30 @@ function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').classList.add('active');
   loadProfile();
+  loadRecentTracks();
   loadTopTracks('short_term');
+  loadPlaylists();
   setupPillTabs();
   setupSearch();
   setupPlayer();
+  setupNavTabs();
+}
+
+function setupNavTabs() {
+  document.querySelectorAll('.nav-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+      document.getElementById(`tab-${tab}`).style.display = 'block';
+      clearSearch();
+
+      if (tab === 'liked') loadLikedSongs();
+      if (tab === 'playlists') loadPlaylistsGrid();
+    });
+  });
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -482,6 +550,23 @@ async function loadProfile() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+//   RECENT TRACKS
+// ═══════════════════════════════════════════════════════════════
+async function loadRecentTracks() {
+  const listEl = document.getElementById('recent-tracks-list');
+  if (!listEl) return;
+  const data = await spotifyFetch('recently-played?limit=6');
+  if (!data || !data.items) return;
+
+  const tracks = data.items.map(item => item.track);
+  const likedStatus = await checkLikedMultiple(tracks.map(t => t.id));
+  listEl.innerHTML = '';
+  tracks.forEach((track, i) => {
+    listEl.appendChild(makeTrackRow(track, i, tracks, likedStatus[i]));
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
 //   TOP TRACKS
 // ═══════════════════════════════════════════════════════════════
 async function loadTopTracks(timeRange = 'short_term') {
@@ -496,13 +581,81 @@ async function loadTopTracks(timeRange = 'short_term') {
   }
 
   trackQueue = data.items;
+  const likedStatus = await checkLikedMultiple(data.items.map(t => t.id));
   listEl.innerHTML = '';
   data.items.forEach((track, i) => {
-    listEl.appendChild(makeTrackRow(track, i));
+    listEl.appendChild(makeTrackRow(track, i, data.items, likedStatus[i]));
   });
 }
 
-function makeTrackRow(track, index) {
+async function loadLikedSongs() {
+  const listEl = document.getElementById('liked-songs-list');
+  listEl.innerHTML = '<div style="display:flex;flex-direction:column;gap:8px">' +
+    Array(8).fill('<div class="skeleton" style="height:64px;border-radius:10px"></div>').join('') + '</div>';
+
+  const data = await spotifyFetch('liked-songs?limit=50');
+  if (!data || !data.items || !data.items.length) {
+    listEl.innerHTML = `<div class="empty-state"><span class="material-symbols-outlined">favorite_border</span><h3>No liked songs yet</h3><p>Heart your favorite songs to see them here!</p></div>`;
+    return;
+  }
+
+  const tracks = data.items.map(item => item.track);
+  const likedStatus = await checkLikedMultiple(tracks.map(t => t.id));
+  listEl.innerHTML = '';
+  tracks.forEach((track, i) => {
+    listEl.appendChild(makeTrackRow(track, i, tracks, likedStatus[i]));
+  });
+}
+
+async function loadPlaylists() {
+  const data = await spotifyFetch('playlists');
+  const sidebar = document.getElementById('sidebar-playlists');
+  if (!data || !data.items) return;
+
+  sidebar.innerHTML = data.items.map(p => `
+    <a href="#" class="sidebar-link" onclick="loadPlaylistDetail('${p.id}', '${escHtml(p.name)}')">${escHtml(p.name)}</a>
+  `).join('');
+}
+
+async function loadPlaylistsGrid() {
+  const grid = document.getElementById('playlists-grid');
+  grid.innerHTML = Array(6).fill('<div class="skeleton" style="height:200px;border-radius:14px"></div>').join('');
+
+  const data = await spotifyFetch('playlists');
+  if (!data || !data.items) return;
+
+  grid.innerHTML = data.items.map(p => `
+    <div class="search-card" onclick="loadPlaylistDetail('${p.id}', '${escHtml(p.name)}')">
+      <img class="search-thumb" style="width:140px; height:140px" src="${p.images?.[0]?.url || ''}" alt=""/>
+      <div class="search-info">
+        <div class="search-name">${escHtml(p.name)}</div>
+        <div class="search-artist">${p.tracks.total} tracks</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function loadPlaylistDetail(id, name) {
+  document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+  const homeTab = document.getElementById('tab-home');
+  homeTab.style.display = 'block';
+  
+  const listEl = document.getElementById('top-tracks-list');
+  document.querySelector('#tab-home .section-title').textContent = `📂 Playlist: ${name}`;
+  listEl.innerHTML = '<div class="skeleton" style="height:300px"></div>';
+
+  const data = await spotifyFetch(`playlist/${id}`);
+  if (!data || !data.tracks) return;
+
+  const tracks = data.tracks.items.map(i => i.track).filter(t => t);
+  const likedStatus = await checkLikedMultiple(tracks.map(t => t.id));
+  listEl.innerHTML = '';
+  tracks.forEach((track, i) => {
+    listEl.appendChild(makeTrackRow(track, i, tracks, likedStatus[i]));
+  });
+}
+
+function makeTrackRow(track, index, queue = [], isLiked = false) {
   const row = document.createElement('div');
   row.className = 'track-row';
   row.dataset.trackId = track.id;
@@ -521,6 +674,9 @@ function makeTrackRow(track, index) {
       <div class="track-name">${escHtml(track.name)}</div>
       <div class="track-artist">${escHtml(track.artists?.map(a=>a.name).join(', ') || '')}</div>
     </div>
+    <button class="btn-heart ${isLiked ? 'active' : ''}" onclick="toggleLike('${track.id}', this, event)">
+      <span class="material-symbols-outlined">favorite</span>
+    </button>
     <div class="track-duration">${dur}</div>
     <button class="track-preview-btn" title="${hasPreview ? 'Preview 30s' : 'No preview available'}" ${hasPreview ? '' : 'disabled style="opacity:.3"'}>
       <span class="material-symbols-outlined">headphones</span>
@@ -528,14 +684,31 @@ function makeTrackRow(track, index) {
   `;
 
   row.addEventListener('click', (e) => {
-    if (e.target.closest('.track-preview-btn')) {
-      if (track.preview_url) playTrack(track, index, trackQueue);
-    } else {
-      if (track.preview_url) playTrack(track, index, trackQueue);
-    }
+    if (e.target.closest('button')) return;
+    if (track.preview_url) playTrack(track, index, queue);
   });
 
   return row;
+}
+
+async function checkLikedMultiple(ids) {
+  if (!ids.length) return [];
+  const res = await spotifyFetch(`check-liked?ids=${ids.join(',')}`);
+  return Array.isArray(res) ? res : ids.map(() => false);
+}
+
+async function toggleLike(id, el, event) {
+  if (event) event.stopPropagation();
+  const isLiked = el.classList.contains('active');
+  const endpoint = isLiked ? 'unlike-song' : 'like-song';
+  
+  el.classList.toggle('active');
+  
+  await fetch(`/api/spotify/${endpoint}?session=${SESSION}`, {
+    method: isLiked ? 'DELETE' : 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids: [id] })
+  });
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -577,7 +750,7 @@ async function doSearch(query) {
   });
 }
 
-function makeSearchCard(track, index) {
+function makeSearchCard(track, index, queue = []) {
   const card = document.createElement('div');
   card.className = 'search-card';
   card.dataset.trackId = track.id;
@@ -589,17 +762,25 @@ function makeSearchCard(track, index) {
     <img class="search-thumb" src="${img}" alt="" loading="lazy"/>
     <div class="search-info">
       <div class="search-name">${escHtml(track.name)}</div>
-      <div class="search-artist">${escHtml(track.artists?.map(a=>a.name).join(', ') || '')} · ${escHtml(track.album?.name || '')}</div>
+      <div class="search-artist">${escHtml(track.artists?.map(a=>a.name).join(', ') || '')}</div>
     </div>
-    <button class="search-play-btn" ${hasPreview ? '' : 'disabled style="opacity:.3;cursor:default"'}>
-      <span class="material-symbols-outlined">play_arrow</span>
-    </button>
+    <div style="display:flex; align-items:center; gap:8px">
+      <button class="btn-heart" onclick="toggleLike('${track.id}', this, event)">
+        <span class="material-symbols-outlined">favorite</span>
+      </button>
+      <button class="search-play-btn" ${hasPreview ? '' : 'disabled style="opacity:.3;cursor:default"'}>
+        <span class="material-symbols-outlined">play_arrow</span>
+      </button>
+    </div>
   `;
 
-  card.addEventListener('click', () => {
-    if (hasPreview) playTrack(track, index, trackQueue);
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    if (hasPreview) playTrack(track, index, queue);
     else showToast('No 30s preview available for this track');
   });
+
+  checkIfLiked(track.id, card.querySelector('.btn-heart'));
 
   return card;
 }

@@ -6,6 +6,7 @@ const path = require('path');
 const https = require('https');
 const querystring = require('querystring');
 const crypto = require('crypto');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -16,10 +17,10 @@ app.use(cors());
 app.use(express.json());
 
 // ─── SPOTIFY CREDENTIALS ─────────────────────────────────────────────────────
-const SPOTIFY_CLIENT_ID     = 'ca3b53950d104ceeade097021440634b';
-const SPOTIFY_CLIENT_SECRET = 'aa484d2ea2e841b7b88f48ef1e1cb27e';
-const SPOTIFY_REDIRECT_URI  = 'http://localhost:8080/callback';
-const SPOTIFY_SCOPES        = 'user-read-private user-read-email user-top-read user-library-read user-read-playback-state user-modify-playback-state';
+const SPOTIFY_CLIENT_ID     = process.env.SPOTIFY_CLIENT_ID || 'ca3b53950d104ceeade097021440634b';
+const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET || 'aa484d2ea2e841b7b88f48ef1e1cb27e';
+const SPOTIFY_REDIRECT_URI  = process.env.REDIRECT_URI || 'https://mood-wave-zeta.vercel.app/callback';
+const SPOTIFY_SCOPES        = 'user-read-private user-read-email user-top-read user-library-read user-library-modify playlist-read-private playlist-read-collaborative user-read-playback-state user-modify-playback-state';
 
 // ─── CLIENT CREDENTIALS TOKEN (for anonymous search / featured playlists) ────
 let appAccessToken = '';
@@ -60,21 +61,30 @@ async function getAppToken() {
 // ─── USER SESSION STORE (in-memory) ──────────────────────────────────────────
 const sessions = {};
 
-function makeSpotifyRequest(path, token) {
+function makeSpotifyRequest(path, token, method = 'GET', body = null) {
     return new Promise((resolve, reject) => {
-        const req = https.get({
+        const options = {
             hostname: 'api.spotify.com',
             path,
-            headers: { 'Authorization': `Bearer ${token}` }
-        }, (res) => {
-            let body = '';
-            res.on('data', c => body += c);
+            method,
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        };
+
+        const req = https.request(options, (res) => {
+            let resBody = '';
+            res.on('data', c => resBody += c);
             res.on('end', () => {
-                try { resolve(JSON.parse(body)); }
-                catch(e) { resolve({ error: 'Parse error' }); }
+                if (res.statusCode === 204) return resolve({ success: true });
+                try { resolve(JSON.parse(resBody)); }
+                catch(e) { resolve({ error: 'Parse error', body: resBody }); }
             });
         });
         req.on('error', reject);
+        if (body) req.write(JSON.stringify(body));
+        req.end();
     });
 }
 
@@ -227,6 +237,46 @@ app.get('/api/spotify/user-search', requireUserSession, async (req, res) => {
     try {
         const { q, type = 'track' } = req.query;
         const data = await makeSpotifyRequest(`/v1/search?q=${encodeURIComponent(q)}&type=${type}&limit=20`, req.userToken);
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/spotify/liked-songs', requireUserSession, async (req, res) => {
+    try {
+        const limit = req.query.limit || 20;
+        const offset = req.query.offset || 0;
+        const data = await makeSpotifyRequest(`/v1/me/tracks?limit=${limit}&offset=${offset}`, req.userToken);
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/spotify/check-liked', requireUserSession, async (req, res) => {
+    try {
+        const { ids } = req.query; // Comma separated IDs
+        const data = await makeSpotifyRequest(`/v1/me/tracks/contains?ids=${ids}`, req.userToken);
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.put('/api/spotify/like-song', requireUserSession, async (req, res) => {
+    try {
+        const { ids } = req.body; // Array of IDs
+        const data = await makeSpotifyRequest(`/v1/me/tracks?ids=${ids.join(',')}`, req.userToken, 'PUT');
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.delete('/api/spotify/unlike-song', requireUserSession, async (req, res) => {
+    try {
+        const { ids } = req.body; // Array of IDs
+        const data = await makeSpotifyRequest(`/v1/me/tracks?ids=${ids.join(',')}`, req.userToken, 'DELETE');
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/spotify/playlists', requireUserSession, async (req, res) => {
+    try {
+        const data = await makeSpotifyRequest('/v1/me/playlists?limit=20', req.userToken);
         res.json(data);
     } catch (e) { res.status(500).json({ error: e.message }); }
 });
