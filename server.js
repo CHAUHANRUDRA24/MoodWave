@@ -4,19 +4,20 @@ const path = require('path');
 const https = require('https');
 const querystring = require('querystring');
 const crypto = require('crypto');
+require('dotenv').config();
 
 const app = express();
-const PORT = 8080;
-const JWT_SECRET = 'Rs7YILgmoWlLMoOK33gzDqcZUgT3RBw6HrQiRyHzYsz';
+const PORT = process.env.PORT || 8080;
+const JWT_SECRET = process.env.JWT_SECRET || 'Rs7YILgmoWlLMoOK33gzDqcZUgT3RBw6HrQiRyHzYsz';
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // ─── SPOTIFY CREDENTIALS ─────────────────────────────────────────────────────
-const SPOTIFY_CLIENT_ID     = 'ca3b53950d104ceeade097021440634b';
-const SPOTIFY_CLIENT_SECRET = 'aa484d2ea2e841b7b88f48ef1e1cb27e';
-const SPOTIFY_REDIRECT_URI  = 'https://mood-wave-zeta.vercel.app/callback';
+const SPOTIFY_CLIENT_ID     = process.env.SPOTIFY_CLIENT_ID || 'ca3b53950d104ceeade097021440634b';
+const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET || 'aa484d2ea2e841b7b88f48ef1e1cb27e';
+const SPOTIFY_REDIRECT_URI  = process.env.REDIRECT_URI || 'https://mood-wave-zeta.vercel.app/callback';
 const SPOTIFY_SCOPES        = 'user-read-private user-read-email user-top-read user-library-read user-library-modify playlist-read-private playlist-read-collaborative user-read-playback-state user-modify-playback-state';
 
 // ─── CLIENT CREDENTIALS TOKEN (for anonymous search / featured playlists) ────
