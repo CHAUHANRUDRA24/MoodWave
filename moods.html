@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Moodwave - Moods</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#0e0e0e",
+              "surface-container-highest": "#262626",
+              "secondary-container": "#006d42",
+              "on-secondary": "#005e39",
+              "inverse-surface": "#fcf9f8",
+              "outline": "#767575",
+              "on-tertiary": "#005762",
+              "primary-fixed": "#72fe8f",
+              "on-error-container": "#ffd2c8",
+              "surface-tint": "#72fe8f",
+              "on-tertiary-fixed": "#003840",
+              "primary-container": "#1cb853",
+              "surface-container-low": "#131313",
+              "surface-container-lowest": "#000000",
+              "error": "#ff7351",
+              "surface-container": "#1a1a1a",
+              "outline-variant": "#484847",
+              "on-surface": "#ffffff",
+              "on-error": "#450900",
+              "surface-container-high": "#20201f",
+              "surface-bright": "#2c2c2c",
+              "tertiary-dim": "#00d4ee",
+              "on-primary-container": "#002a0c",
+              "inverse-on-surface": "#565555",
+              "secondary-fixed-dim": "#6deca8",
+              "on-primary-fixed": "#004a1c",
+              "secondary": "#7cfbb5",
+              "primary-dim": "#63ef82",
+              "tertiary-container": "#0fe3ff",
+              "on-tertiary-container": "#004d58",
+              "inverse-primary": "#006e2d",
+              "error-container": "#b92902",
+              "on-secondary-fixed-variant": "#006940",
+              "on-tertiary-fixed-variant": "#005763",
+              "error-dim": "#d53d18",
+              "primary-fixed-dim": "#63ef82",
+              "surface": "#0e0e0e",
+              "on-background": "#ffffff",
+              "surface-variant": "#262626",
+              "on-secondary-fixed": "#00492b",
+              "secondary-dim": "#6deca8",
+              "primary": "#72fe8f",
+              "on-secondary-container": "#e2ffe9",
+              "secondary-fixed": "#7cfbb5",
+              "tertiary-fixed": "#0fe3ff",
+              "on-surface-variant": "#adaaaa",
+              "surface-dim": "#0e0e0e",
+              "tertiary-fixed-dim": "#00d4ee",
+              "tertiary": "#88ebff",
+              "on-primary-fixed-variant": "#006a2b",
+              "on-primary": "#005f26"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(38, 38, 38, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .glow-green {
+            box-shadow: 0 0 40px -10px rgba(114, 254, 143, 0.15);
+        }
+        .text-glow {
+            text-shadow: 0 0 15px rgba(114, 254, 143, 0.4);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30 antialiased overflow-x-hidden">
+<!-- SideNavBar (from JSON) -->
+<aside class="h-full w-64 fixed left-0 top-0 border-r border-white/10 bg-neutral-900/60 backdrop-blur-xl shadow-[20px_0_50px_rgba(0,0,0,0.5)] flex flex-col h-screen py-8 z-40">
+<div class="px-6 mb-12">
+<h1 class="text-2xl font-bold tracking-tighter text-white font-headline">Moodwave</h1>
+<p class="text-[10px] text-on-surface-variant tracking-[0.2em] uppercase mt-1">The Ethereal Conductor</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-400 hover:text-white transition-colors hover:bg-white/5 duration-300 font-['Plus_Jakarta_Sans'] text-sm tracking-wide" href="/">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+                Home
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-400 hover:text-white transition-colors hover:bg-white/5 duration-300 font-['Plus_Jakarta_Sans'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="library_music">library_music</span>
+                Library
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-[#1DB954]/10 text-[#1DB954] border-r-4 border-[#1DB954] font-semibold font-['Plus_Jakarta_Sans'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="mood" style="font-variation-settings: 'FILL' 1;">mood</span>
+                Moods
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-400 hover:text-white transition-colors hover:bg-white/5 duration-300 font-['Plus_Jakarta_Sans'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="playlist_play">playlist_play</span>
+                Playlists
+            </a>
+</nav>
+<div class="px-6 mt-auto">
+<div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl cursor-pointer hover:bg-white/10 transition-colors" onclick="window.location.href='/api/spotify/login'">
+<img id="sidebar-avatar" alt="User Profile Avatar" class="w-10 h-10 rounded-full object-cover border border-white/10" data-alt="User profile avatar close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfWGG1tdItSPjgNT3nvD9Bkl5SWTS6ZMImuF0Q-UN01XJTWmxK0ODPzDWntPtDsUYP46gBlDYbmbk8Wj1YsMSOKx1Y1osNAK5LS3Y9YY7JreFtSh8DYPssTr_xDCLw_7AVwfy1Z5UavjT1sia-bs8L1bQhHKNib3GaWU7VJ0wC68Vy930FmSpkrKB-XiMSGFCjUJnDTdgALkZgNpd-hUXcpVBJyyBPJrlZMSI7TfS1CZxdtYa04FBSyt80-u92nzf3vq6VQZyTCUs"/>
+<div class="overflow-hidden">
+<p id="sidebar-name" class="text-sm font-semibold truncate text-white">Guest</p>
+<p id="sidebar-plan" class="text-[10px] text-on-surface-variant truncate">Login with Spotify</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar (from JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 flex items-center justify-between px-8 z-30 bg-transparent">
+<div class="flex-1 max-w-xl">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2.5 pl-12 pr-4 text-sm focus:ring-1 focus:ring-primary/50 placeholder:text-neutral-500 transition-all font-body text-white outline-none" placeholder="Search moods or sounds..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="opacity-80 hover:opacity-100 hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="opacity-80 hover:opacity-100 hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 pt-24 pb-32 px-12 min-h-screen">
+<!-- Header Section -->
+<section class="mb-12">
+<h2 class="text-5xl font-extrabold font-headline tracking-tighter text-white mb-2 leading-none">Sonic Landscapes</h2>
+<p class="text-on-surface-variant text-lg max-w-2xl">Curate your auditory environment with liquid-tuned atmospheres for every mental state.</p>
+</section>
+<!-- Moods Bento Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Hero Mood Card: Chill -->
+<div onclick="playMood('chill track')" class="col-span-8 group relative overflow-hidden glass-card rounded-xl p-8 min-h-[400px] flex flex-col justify-end border border-white/5 cursor-pointer hover:border-white/20 transition-all">
+<div class="absolute inset-0 z-0 bg-gradient-to-br from-[#00d4ee]/20 to-transparent opacity-40 group-hover:opacity-60 transition-opacity"></div>
+<div class="absolute -top-24 -right-24 w-96 h-96 bg-[#00d4ee]/10 blur-[100px] rounded-full"></div>
+<div class="relative z-10">
+<div class="mb-4 inline-flex p-3 rounded-2xl bg-[#00d4ee]/10 text-tertiary">
+<span class="material-symbols-outlined text-4xl" data-icon="water_drop" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<h3 class="text-6xl font-black font-headline tracking-tighter text-white mb-2">Chill</h3>
+<p class="text-on-surface-variant text-xl max-w-md font-light leading-relaxed">Submerged textures and ambient rhythms to quiet the noise.</p>
+<div class="mt-8 flex items-center gap-4">
+<button class="bg-primary text-on-primary rounded-full px-8 py-3 font-bold flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_20px_rgba(114,254,143,0.3)]">
+<span class="material-symbols-outlined" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            Listen Now
+                        </button>
+</div>
+</div>
+</div>
+<!-- Mood Card: Focus -->
+<div onclick="playMood('deep focus track')" class="col-span-4 group relative overflow-hidden glass-card rounded-xl p-8 border border-white/5 cursor-pointer hover:border-white/20 transition-all">
+<div class="absolute inset-0 z-0 bg-gradient-to-t from-primary/10 to-transparent opacity-20 group-hover:opacity-40 transition-opacity"></div>
+<div class="relative z-10 h-full flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-3 rounded-2xl bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="center_focus_weak">center_focus_weak</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<div>
+<h3 class="text-3xl font-bold font-headline tracking-tight text-white mb-1">Focus</h3>
+<p class="text-on-surface-variant text-sm">Deep work deep house.</p>
+</div>
+</div>
+</div>
+<!-- Mood Card: Energetic -->
+<div onclick="playMood('energetic track')" class="col-span-4 group relative overflow-hidden glass-card rounded-xl p-8 border border-white/5 cursor-pointer hover:border-white/20 transition-all">
+<div class="absolute inset-0 z-0 bg-gradient-to-t from-error/10 to-transparent opacity-20 group-hover:opacity-40 transition-opacity"></div>
+<div class="relative z-10 h-full flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-3 rounded-2xl bg-error/10 text-error">
+<span class="material-symbols-outlined text-3xl" data-icon="bolt" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<div>
+<h3 class="text-3xl font-bold font-headline tracking-tight text-white mb-1">Energetic</h3>
+<p class="text-on-surface-variant text-sm">Electric charge for your system.</p>
+</div>
+</div>
+</div>
+<!-- Mood Card: Melancholy -->
+<div onclick="playMood('melancholy track')" class="col-span-4 group relative overflow-hidden glass-card rounded-xl p-8 border border-white/5 cursor-pointer hover:border-white/20 transition-all">
+<div class="absolute inset-0 z-0 bg-gradient-to-t from-tertiary-container/10 to-transparent opacity-20 group-hover:opacity-40 transition-opacity"></div>
+<div class="relative z-10 h-full flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-3 rounded-2xl bg-tertiary-container/10 text-tertiary-container">
+<span class="material-symbols-outlined text-3xl" data-icon="cloud">cloud</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<div>
+<h3 class="text-3xl font-bold font-headline tracking-tight text-white mb-1">Melancholy</h3>
+<p class="text-on-surface-variant text-sm">Beauty in the somber.</p>
+</div>
+</div>
+</div>
+<!-- Mood Card: Euphoric -->
+<div onclick="playMood('euphoric track')" class="col-span-4 group relative overflow-hidden glass-card rounded-xl p-8 border border-white/5 cursor-pointer hover:border-white/20 transition-all">
+<div class="absolute inset-0 z-0 bg-gradient-to-t from-secondary/10 to-transparent opacity-20 group-hover:opacity-40 transition-opacity"></div>
+<div class="relative z-10 h-full flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-3 rounded-2xl bg-secondary/10 text-secondary">
+<span class="material-symbols-outlined text-3xl" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<div>
+<h3 class="text-3xl font-bold font-headline tracking-tight text-white mb-1">Euphoric</h3>
+<p class="text-on-surface-variant text-sm">Transcendent sonic highs.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Section -->
+<section class="mt-20 flex items-center justify-between p-10 rounded-xl glass-card border border-white/5 relative overflow-hidden">
+<div class="absolute -left-20 -top-20 w-64 h-64 bg-primary/10 blur-[80px] rounded-full"></div>
+<div class="relative z-10">
+<h4 class="text-3xl font-bold font-headline tracking-tight text-white mb-2">Can't find your wave?</h4>
+<p class="text-on-surface-variant max-w-lg">Let Moodwave AI analyze your current biometric data and craft a unique mood profile just for this moment.</p>
+</div>
+<button class="relative z-10 px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors font-bold text-white flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+                Generate Custom Mood
+            </button>
+</section>
+</main>
+<!-- Footer / Player Bar (from JSON) -->
+<footer class="fixed bottom-0 left-0 w-full h-24 bg-[#1a1a1a]/80 backdrop-blur-2xl border-t border-white/5 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] flex items-center justify-between px-10">
+<!-- Player Info -->
+<div class="flex items-center gap-4 w-1/4">
+<div class="w-14 h-14 rounded-lg overflow-hidden relative group">
+<img id="player-thumb" alt="Currently playing track art" class="w-full h-full object-cover" data-alt="Abstract vibrant soundwave art" src=""/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-white" data-icon="keyboard_arrow_up">keyboard_arrow_up</span>
+</div>
+</div>
+<div class="overflow-hidden">
+<p id="player-title" class="text-sm font-bold text-white truncate font-headline tracking-tight">Select a Mood</p>
+<p id="player-artist" class="text-xs text-on-surface-variant truncate font-body">Moodwave AI</p>
+</div>
+<button class="hover:scale-110 transition-transform cursor-pointer active:brightness-125 text-neutral-500 hover:text-primary ml-2">
+<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
+</button>
+</div>
+<!-- Main Controls -->
+<div class="flex flex-col items-center gap-2 flex-1 max-w-xl">
+<div class="flex items-center gap-8">
+<button class="text-neutral-500 hover:text-white transition-colors cursor-pointer active:brightness-125">
+<span class="material-symbols-outlined" data-icon="shuffle">shuffle</span>
+</button>
+<button id="btn-prev" class="text-white hover:text-primary transition-colors cursor-pointer active:brightness-125">
+<span class="material-symbols-outlined text-3xl" data-icon="skip_previous">skip_previous</span>
+</button>
+<button id="btn-play-pause" class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-black hover:scale-110 transition-transform cursor-pointer active:scale-95 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+<span id="btn-play-icon" class="material-symbols-outlined text-3xl" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<button id="btn-next" class="text-white hover:text-primary transition-colors cursor-pointer active:brightness-125">
+<span class="material-symbols-outlined text-3xl" data-icon="skip_next">skip_next</span>
+</button>
+<button class="text-neutral-500 hover:text-white transition-colors cursor-pointer active:brightness-125">
+<span class="material-symbols-outlined" data-icon="repeat">repeat</span>
+</button>
+</div>
+<div class="flex items-center gap-3 w-full group">
+<span id="time-current" class="text-[10px] text-neutral-500 font-mono">0:00</span>
+<div id="progress-container" class="flex-1 h-1 bg-white/10 rounded-full relative cursor-pointer overflow-hidden">
+<div id="progress-fill" class="absolute top-0 left-0 h-full w-[0%] bg-primary rounded-full group-hover:bg-primary-fixed transition-colors"></div>
+</div>
+<span id="time-total" class="text-[10px] text-neutral-500 font-mono">0:30</span>
+</div>
+</div>
+<!-- Extra Actions -->
+<div class="flex items-center justify-end gap-6 w-1/4">
+<div class="flex items-center gap-3 group">
+<span class="material-symbols-outlined text-neutral-500 group-hover:text-white transition-colors text-xl" data-icon="volume_up">volume_up</span>
+<div id="volume-container" class="w-24 h-1 bg-white/10 rounded-full relative cursor-pointer overflow-hidden">
+<div id="volume-fill" class="absolute top-0 left-0 h-full w-[70%] bg-neutral-400 group-hover:bg-primary transition-colors"></div>
+</div>
+</div>
+<button class="text-neutral-500 hover:text-white transition-colors cursor-pointer active:brightness-125">
+<span class="material-symbols-outlined text-xl" data-icon="queue_music">queue_music</span>
+</button>
+<button class="text-neutral-500 hover:text-white transition-colors cursor-pointer active:brightness-125">
+<span class="material-symbols-outlined text-xl" data-icon="devices">devices</span>
+</button>
+</div>
+<!-- Product Name Overlay for Brand -->
+<div class="absolute left-1/2 -translate-x-1/2 -top-4 px-4 py-1 bg-[#1a1a1a] border border-white/5 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold text-primary opacity-50 select-none">
+            Moodwave Liquid Glass Player
+        </div>
+</footer>
+
+<audio id="audio-el" preload="none"></audio>
+<script>
+let SESSION = null;
+let currentTrack = null;
+let trackQueue = [];
+let queueIndex = -1;
+const audio = document.getElementById('audio-el');
+
+async function spotifyFetch(endpoint) {
+    const url = `/api/spotify/${endpoint}${endpoint.includes('?') ? '&' : '?'}session=${SESSION}`;
+    try {
+        const res = await fetch(url);
+        if (res.status === 401) { logout(); return null; }
+        return await res.json();
+    } catch(e) { console.error(e); return null; }
+}
+
+function init() {
+    SESSION = localStorage.getItem('mw_spotify_session');
+    if (SESSION) {
+        loadProfile();
+        setupPlayer();
+    }
+}
+
+function logout() {
+    localStorage.removeItem('mw_spotify_session');
+    window.location.reload();
+}
+
+async function loadProfile() {
+    const data = await spotifyFetch('me');
+    if (!data || data.error) return;
+    const name = data.display_name || 'User';
+    const plan = data.product === 'premium' ? 'Premium' : 'Free';
+    const img = data.images?.[0]?.url || 'https://via.placeholder.com/150';
+    document.getElementById('sidebar-name').textContent = name;
+    document.getElementById('sidebar-plan').textContent = `${plan} Member`;
+    document.getElementById('sidebar-avatar').src = img;
+}
+
+async function playMood(moodQuery) {
+    if(!SESSION) {
+        alert("Please connect to Spotify via the main dashboard to play moods.");
+        return;
+    }
+    const data = await spotifyFetch(`user-search?q=${encodeURIComponent(moodQuery)}&type=track`);
+    if(!data?.tracks?.items?.length) return;
+    trackQueue = data.tracks.items;
+    queueIndex = 0;
+    playTrack(trackQueue[0], 0);
+}
+
+function playTrack(track, idx) {
+    if (!track.preview_url) { 
+        queueIndex++;
+        if(queueIndex < trackQueue.length) playTrack(trackQueue[queueIndex], queueIndex);
+        return; 
+    }
+    currentTrack = track; queueIndex = idx;
+    
+    audio.src = track.preview_url;
+    audio.volume = parseFloat(document.getElementById('volume-fill').style.width || '70') / 100 || 0.7;
+    audio.play().catch(console.warn);
+
+    document.getElementById('player-thumb').src = track.album?.images?.[0]?.url || '';
+    document.getElementById('player-title').textContent = track.name;
+    document.getElementById('player-artist').textContent = track.artists?.map(a=>a.name).join(', ');
+}
+
+function setupPlayer() {
+    document.getElementById('btn-play-pause').onclick = () => {
+        if (!audio.src) return;
+        if (audio.paused) audio.play(); else audio.pause();
+    };
+    document.getElementById('btn-next').onclick = () => playNext();
+    document.getElementById('btn-prev').onclick = () => playPrev();
+
+    document.getElementById('progress-container').onclick = e => {
+        if (!audio.duration) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+    };
+    document.getElementById('volume-container').onclick = e => {
+        const r = e.currentTarget.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+        audio.volume = pct;
+        document.getElementById('volume-fill').style.width = `${pct * 100}%`;
+    };
+
+    audio.onplay = () => { document.getElementById('btn-play-icon').textContent = 'pause'; };
+    audio.onpause = () => { document.getElementById('btn-play-icon').textContent = 'play_arrow'; };
+    audio.onended = () => playNext();
+    audio.ontimeupdate = () => {
+        if(!audio.duration) return;
+        document.getElementById('progress-fill').style.width = `${(audio.currentTime/audio.duration)*100}%`;
+        document.getElementById('time-current').textContent = `0:${String(Math.floor(audio.currentTime)).padStart(2,'0')}`;
+    };
+}
+
+function playNext() {
+    if (!trackQueue.length) return;
+    let n = queueIndex;
+    do { n = (n+1)%trackQueue.length; } while (!trackQueue[n]?.preview_url && n!==queueIndex);
+    if(trackQueue[n]?.preview_url) playTrack(trackQueue[n], n);
+}
+function playPrev() {
+    if (!trackQueue.length) return;
+    let n = queueIndex;
+    do { n = (n-1+trackQueue.length)%trackQueue.length; } while (!trackQueue[n]?.preview_url && n!==queueIndex);
+    if(trackQueue[n]?.preview_url) playTrack(trackQueue[n], n);
+}
+
+init();
+</script>
+</body></html>

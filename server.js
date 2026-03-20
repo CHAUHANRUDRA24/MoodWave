@@ -308,6 +308,16 @@ app.get('/spotify.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'spotify.html'));
 });
 
+// Serve the Moods page
+app.get('/moods.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'moods.html'));
+});
+
+// Serve the Playlists page
+app.get('/playlists.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'playlists.html'));
+});
+
 // Spotify API Proxy Endpoints (App/Anonymous token)
 app.get('/api/spotify/search', async (req, res) => {
     try {
