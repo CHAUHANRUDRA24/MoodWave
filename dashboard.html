@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home | Moodwave</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error": "#ff7351",
+              "on-primary-container": "#002a0c",
+              "surface": "#0e0e0e",
+              "secondary-fixed": "#7cfbb5",
+              "tertiary-fixed-dim": "#00d4ee",
+              "on-surface-variant": "#adaaaa",
+              "on-error": "#450900",
+              "error-container": "#b92902",
+              "on-secondary-fixed-variant": "#006940",
+              "on-tertiary-fixed-variant": "#005763",
+              "primary-dim": "#63ef82",
+              "inverse-surface": "#fcf9f8",
+              "primary": "#72fe8f",
+              "on-tertiary-container": "#004d58",
+              "inverse-primary": "#006e2d",
+              "on-background": "#ffffff",
+              "primary-fixed": "#72fe8f",
+              "on-error-container": "#ffd2c8",
+              "surface-container-lowest": "#000000",
+              "background": "#0e0e0e",
+              "on-secondary": "#005e39",
+              "secondary": "#7cfbb5",
+              "secondary-fixed-dim": "#6deca8",
+              "on-secondary-container": "#e2ffe9",
+              "surface-container-low": "#131313",
+              "tertiary-dim": "#00d4ee",
+              "on-primary-fixed": "#004a1c",
+              "error-dim": "#d53d18",
+              "tertiary-container": "#0fe3ff",
+              "surface-bright": "#2c2c2c",
+              "inverse-on-surface": "#565555",
+              "on-primary": "#005f26",
+              "on-secondary-fixed": "#00492b",
+              "on-primary-fixed-variant": "#006a2b",
+              "secondary-container": "#006d42",
+              "surface-variant": "#262626",
+              "surface-dim": "#0e0e0e",
+              "tertiary": "#88ebff",
+              "on-tertiary": "#005762",
+              "outline": "#767575",
+              "surface-container": "#1a1a1a",
+              "outline-variant": "#484847",
+              "surface-container-high": "#20201f",
+              "primary-container": "#1cb853",
+              "primary-fixed-dim": "#63ef82",
+              "on-tertiary-fixed": "#003840",
+              "surface-tint": "#72fe8f",
+              "on-surface": "#ffffff",
+              "tertiary-fixed": "#0fe3ff",
+              "secondary-dim": "#6deca8",
+              "surface-container-highest": "#262626"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .liquid-glow {
+        background: radial-gradient(circle at 50% 50%, rgba(114, 254, 143, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+      }
+      .glass-card {
+        background: rgba(38, 38, 38, 0.4);
+        backdrop-filter: blur(20px);
+      }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #262626; border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: #484847; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full z-40 h-screen w-64 border-r border-white/10 bg-neutral-900/60 backdrop-blur-xl shadow-2xl shadow-emerald-500/5 font-['Plus_Jakarta_Sans'] text-sm tracking-wide flex flex-col">
+<div class="p-8">
+<h1 class="text-2xl font-bold text-emerald-500 italic mb-8">Moodwave</h1>
+<nav class="space-y-2">
+<!-- Home is Active -->
+<a class="flex items-center gap-3 px-4 py-3 text-emerald-400 bg-white/5 rounded-lg font-bold transition-transform scale-95 active:scale-90" href="/dashboard.html">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-400 hover:text-white transition-all duration-300" href="/spotify.html">
+<span class="material-symbols-outlined" data-icon="library_music">library_music</span>
+<span>Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-400 hover:text-white transition-all duration-300" href="/moods.html">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span>Moods</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-400 hover:text-white transition-all duration-300" href="/playlists.html">
+<span class="material-symbols-outlined" data-icon="queue_music">queue_music</span>
+<span>Playlists</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-white/5">
+<button class="w-full py-3 bg-primary-container text-on-primary-container rounded-full font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                Create Playlist
+            </button>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 h-16 bg-neutral-950/40 backdrop-blur-md flex justify-between items-center px-8 ml-64 w-[calc(100%-16rem)] z-30 font-['Plus_Jakarta_Sans'] font-medium">
+<div class="flex-1 max-w-xl">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl" data-icon="search">search</span>
+<input class="w-full bg-surface-container-high border-none rounded-full py-2.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/50 transition-all placeholder:text-on-surface-variant/50" placeholder="Search for tracks, artists or vibes..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6 ml-8">
+<button class="text-neutral-400 hover:text-emerald-400 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-neutral-400 hover:text-emerald-400 transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border-2 border-primary/20 hover:border-primary transition-colors cursor-pointer" onclick="window.location.href='/api/spotify/login'" id="btn-login" title="Login with Spotify">
+<img id="top-avatar" alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="Close up of a professional male user profile portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA688ZXrOx06FR6YfUM5iH_ICu22g9TGPaV-45th-6jAs7uk2YCBNO3eqlxxfe0PNjE47Pw_5kTBmA66XHPSnJLcJHfVFaa9CvMeUhO5qJzrx-iI9SM2rgNUUxUyp6a61VTAkoJNJLGt2fjFnvMCiy70AIYS7Mun9Mpk87P0K3F287let-zVRFBSfNvdHhBcCy-Nuvdol9Qgq4e3KFnChZMA0WRPNG-lKg1WxSLeWxFQ9bDOTawbIDIxpB11fcO9WDCSUIoG19vof4"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-2 pb-32 px-12 min-h-screen bg-surface relative overflow-hidden">
+<!-- Ambient Background Glows -->
+<div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] rounded-full liquid-glow -z-10 blur-[120px]"></div>
+<div class="absolute bottom-[20%] right-[-10%] w-[400px] h-[400px] rounded-full liquid-glow -z-10 blur-[100px] opacity-40"></div>
+<!-- Personalized Greeting -->
+<section class="mt-12 mb-16 relative">
+<div class="flex flex-col gap-2">
+<p id="hero-welcome" class="text-primary-dim font-headline font-bold tracking-widest text-xs uppercase">Welcome back, Guest</p>
+<h2 class="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter text-on-surface leading-none">
+                    Good Evening
+                </h2>
+</div>
+</section>
+<!-- Bento Grid: Your Spotify Mixes -->
+<section class="mb-16">
+<div class="flex justify-between items-end mb-8">
+<h3 class="text-2xl font-headline font-bold text-on-surface">Your Spotify Mixes</h3>
+<a class="text-sm font-semibold text-primary hover:underline decoration-2 underline-offset-4 transition-all" href="/playlists.html">Explore All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6">
+<!-- Large Featured Mix -->
+<div class="md:col-span-2 lg:col-span-3 aspect-[16/10] relative group overflow-hidden rounded-xl glass-card border border-white/5 cursor-pointer" onclick="playMockPlaylist('Chill Mix')">
+<img alt="Chill Mix" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" data-alt="Abstract soft green and blue lighting on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR4w9n8WfkVxBI1cqE20XCNfjnZVIbY41qDX1A6pCpZPqeETcsmQR9M9snPG3WGCVSIHeh_eO6TAaG9lxt29LoI7Jk5d783BGLbvTE8xiJtGZauIIoau3yM2ecplMv6WWyyFu3xp4lcTvG9MevznpRtScrDxU5KGl3yJJ8l2l8lhJqje1z8jllEnvgD8QXyDlbcSlRSAoBC_6zNiZv56zmqLfWoovt1sUmaN42EPsb5zQRWEkn_N98gCImRifooK3udNWlaFX0FyE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent p-8 flex flex-col justify-end">
+<span class="px-3 py-1 bg-primary text-on-primary text-[10px] font-bold rounded-full w-fit mb-4">DAILY SELECTION</span>
+<h4 class="text-4xl font-headline font-extrabold text-white mb-2">Chill Mix</h4>
+<p class="text-on-surface-variant text-sm line-clamp-1">Khruangbin, Bonobo, Tycho, and more smooth vibes.</p>
+<div class="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<button class="p-4 bg-primary text-on-primary rounded-full shadow-xl shadow-primary/20">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="aspect-square relative group overflow-hidden rounded-xl glass-card border border-white/5 cursor-pointer" onclick="playMockPlaylist('Pop Mix')">
+<img alt="Pop Mix" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-500" data-alt="Neon pink and green concert stage lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhuSlmjItWZpmmx1MuU9I55plTNYFsIcmZGtzirCu5xm2FirbuclZttoP6yJG_v7kyq0ycrKuGuW2WLYt4YxfyPH46xAhYkrawgVK0x07pF9ycp_lnf1MEpRLUnhN6Kxe4Js9kM8QpTtOW4By6RCrU7FV9xkqs-uBdjm5MSk5Egf6HzoqGk0ZU6yFLvtJ3YGIkmlysFghkV7JBfKkptnbQEMqaCJYRiJrKYjKYDHrgrtBXYGqjwxI9ZV1Qei6AmT54bPEXiDag5ZY"/>
+<div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-surface/80 to-transparent">
+<h4 class="text-xl font-headline font-bold text-white mb-1">Pop Mix</h4>
+<p class="text-on-surface-variant text-xs line-clamp-1">Fresh hits today</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="aspect-square relative group overflow-hidden rounded-xl glass-card border border-white/5 cursor-pointer" onclick="playMockPlaylist('Focus Mix')">
+<img alt="Focus Mix" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-500" data-alt="Minimalist dark grey geometry with subtle green glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdO4MYt1az2bO_d_DxYZ4yoT2zrznJGcyNoLuxFdoUyQ0-prrNqKGo0o7nR1J5-mTk7cVorxmSCSlTZUsT4AUZIVGmWXYqN7J2A78fOgF5WBwk45iyHngFDcKS8JGBatq0Jv32UxZ6NvLYc-iNpWSiAV0JSpWHTKBAYGWs1ke4-hK2Y-LHXxXFdNCDNWTrdSlFKjtUF6XCgOkbXdIOQAuyDHdSNalCwpNZXXBe0b49f3Eg_BftiM4qMJEF79cNGvU0C-bi_CuU3q0"/>
+<div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-surface/80 to-transparent">
+<h4 class="text-xl font-headline font-bold text-white mb-1">Focus Mix</h4>
+<p class="text-on-surface-variant text-xs line-clamp-1">Deep house &amp; lofi</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="aspect-square relative group overflow-hidden rounded-xl glass-card border border-white/5 cursor-pointer" onclick="playMockPlaylist('Jazz Mix')">
+<img alt="Jazz Mix" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-500" data-alt="Close up of a classic trumpet in smoky lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoD2JexEMP_jQilKFAVr5v9SykG_023k-BA15r8auyM2mxQL-GKyqOClTY25eBgV1zki9KhQRni6biKpLh_VB51EQZ-XMo4Tnq8-nQ3L7itO4-P6FisB-trXIDlJglvTVxdwlDrTxcXHNCB6HsqPBepZcrjes-gVjHrKy9uIkLPnQzGAFqhzdvSlRUI3g37-E-8vXbKR55SfZFoj1DIdrCB6gFQ6l9xKqQdPO1JybYuxR9bLOKBRFzQ45ami8FrUs2S6wilX3II14"/>
+<div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-surface/80 to-transparent">
+<h4 class="text-xl font-headline font-bold text-white mb-1">Jazz Mix</h4>
+<p class="text-on-surface-variant text-xs line-clamp-1">The legends of blue</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Recently Played Section -->
+<section>
+<div class="flex justify-between items-end mb-8">
+<h3 class="text-2xl font-headline font-bold text-on-surface">Recently Played</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="recently-played-grid">
+<!-- Track Item -->
+<div class="flex items-center gap-4 p-3 rounded-lg hover:bg-surface-container-high transition-all group cursor-pointer border border-transparent hover:border-white/5" onclick="playMockPlaylist('Midnight City')">
+<div class="w-14 h-14 rounded-md overflow-hidden flex-shrink-0 relative">
+<img alt="Album Art" class="w-full h-full object-cover" data-alt="Abstract vibrant soundwave illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfz2-bokHtUgC5ndlFbAJcPh__QMAiWNWkSr2UFPbUjk08Nax6vGLb8z7C3ech9A6UTAt0PtdqKf76AdeKiNVWsGnRsIbF8shDtvlxasfBA4kYTnkKHyytH3sJzoL_29T6t_i0QlkX7I1mTjhfX3FJ6uT7lhbMgRuY6L5_AFRjw3dcN6hgrdIv4JcUhsRqRmFmqampfy9_ClDGgczco4YGDJQtyd6qLmCPfMdVycx2tEQX5lWdCKwj22GnUvp3aS622cq5IU_sqzU"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h5 class="text-on-surface font-bold text-sm truncate">Midnight City</h5>
+<p class="text-on-surface-variant text-xs truncate">M83</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg hover:bg-surface-container-high transition-all group cursor-pointer border border-transparent hover:border-white/5" onclick="playMockPlaylist('Losing My Religion')">
+<div class="w-14 h-14 rounded-md overflow-hidden flex-shrink-0 relative">
+<img alt="Album Art" class="w-full h-full object-cover" data-alt="Macro of a vinyl record spinning" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ-lDe0LwEumiP7Eq9Bls5koU1pZtqFntJMtgtcjaWLM5UW__KuQTnNI0ZF1S76Q_8rz7a3EJwJkzaU5LdOgclPhAJLx4yPCFefMJi5AZh8EfpkOsy6Qywn7zEo6SrcI8wLDr81QuiC-45tJILl0uCr9B1UOnjJqqs6zCgi7ricJK2dA5pyquQuhs5UPmNJ_ZEP-jgvwRuiBAqCuyem8_syFHSmi1ihQSvWrJxck_OgczY2fLeDfZs9QbB9BHq3ESA4YX-vOXs0Sc"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h5 class="text-on-surface font-bold text-sm truncate">Losing My Religion</h5>
+<p class="text-on-surface-variant text-xs truncate">R.E.M.</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg hover:bg-surface-container-high transition-all group cursor-pointer border border-transparent hover:border-white/5" onclick="playMockPlaylist('Starlight')">
+<div class="w-14 h-14 rounded-md overflow-hidden flex-shrink-0 relative">
+<img alt="Album Art" class="w-full h-full object-cover" data-alt="Concert stage with laser lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvYBn3Lxfv74JKkN7MjWtgOG5O3xdbkLjD0lhITw8k1TR02RSdn7EX8_ZWS2UY06sX9MeWvyvU9gr7lhlb9jE80WbWZC9hJIx_J3zdvMNrlwI3XCwOKcq9Lqs3AUpNy2vNMjRfocRXE2TC1T-MciG3Ycr-8CJctuH2gdoCMyvIwxsI7bawqVrhfI4EPIHbj7HiQ0LhFhQn2xzcCkkXwiJzTIuQhWVf5HX_V-xzLQa6w3NOJVkDVUrT_k9iS4uyI7VVmcisOXLEq2A"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h5 class="text-on-surface font-bold text-sm truncate">Starlight</h5>
+<p class="text-on-surface-variant text-xs truncate">Muse</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg hover:bg-surface-container-high transition-all group cursor-pointer border border-transparent hover:border-white/5" onclick="playMockPlaylist('Texas Sun')">
+<div class="w-14 h-14 rounded-md overflow-hidden flex-shrink-0 relative">
+<img alt="Album Art" class="w-full h-full object-cover" data-alt="Sunset gradient colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPa-KZMkZwSyfCKdjzoFH_mJJprNV6mDHJV56mY7t4m0K9VZ1QH0QOJpYSDUYUahgMD28GW12IyI5xkfAPlBkTzaGn0C7xNNdNVx3IxK-bXTy6AA0JpTIqt0hVhXBc8QfmKAeekG1tKkq8TxFdpJTXxdxBh4NtTC94JvInngCbxYTNn2j480ALVocNyj2rbTcqgU6Os59wrJknDVJQVmRAshYJPtdONPSinfJ_TzdPMJf8ES5KUf9kE6FHcv3bZCweXBPrAYYD9aQ"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h5 class="text-on-surface font-bold text-sm truncate">Texas Sun</h5>
+<p class="text-on-surface-variant text-xs truncate">Leon Bridges</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Player Bar Shell -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-10 h-24 bg-neutral-900/80 backdrop-blur-2xl border-t border-white/5 shadow-[0_-10px_40px_rgba(29,185,84,0.1)] font-['Inter'] text-xs font-semibold">
+<!-- Now Playing Track Info -->
+<div class="flex items-center gap-4 w-[30%]">
+<div class="w-14 h-14 rounded-lg bg-surface-container overflow-hidden shadow-lg">
+<img id="player-thumb" alt="Current Track Art" class="w-full h-full object-cover" data-alt="Abstract colorful music cover art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc5JCSTwWKpajZ5Dys-Lq8C9OOSJ8xfdKHJVScnTZh8qHfF-rfxUKRwBC-s5SqqOMMtwFgtjNAPyoo1563kvHZK9H3_XD9aMGEbw8Lew8Lh5KnOrubV-JcR3GhnOYyRhdF2sy5ofWSvNMVqsVDSIxF085PZeOyG75FbYFmIdD0maCu14GqSH0957vG_st2PVtAjz9ghTy-_19dJ5Lp_nuw11Ity5uYUhn77BkKYJAxyoud-AAbrleay5m95AXAJ2t7YdDNCJbeeHE"/>
+</div>
+<div class="flex flex-col">
+<span id="player-title" class="text-on-surface font-bold text-sm">Select a Track</span>
+<span id="player-artist" class="text-on-surface-variant text-xs">Moodwave AI</span>
+</div>
+<button class="ml-2 text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<!-- Player Controls -->
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="flex items-center gap-8">
+<button class="text-neutral-400 hover:text-white transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer">
+<span class="material-symbols-outlined text-2xl" data-icon="shuffle">shuffle</span>
+</button>
+<button id="btn-prev" class="text-neutral-400 hover:text-white transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer">
+<span class="material-symbols-outlined text-2xl" data-icon="skip_previous">skip_previous</span>
+</button>
+<button id="btn-play-pause" class="text-emerald-400 scale-110 active:scale-95 cursor-pointer">
+<span id="btn-play-icon" class="material-symbols-outlined text-5xl" data-icon="play_circle" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</button>
+<button id="btn-next" class="text-neutral-400 hover:text-white transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer">
+<span class="material-symbols-outlined text-2xl" data-icon="skip_next">skip_next</span>
+</button>
+<button class="text-neutral-400 hover:text-white transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer">
+<span class="material-symbols-outlined text-2xl" data-icon="repeat">repeat</span>
+</button>
+</div>
+<div class="flex items-center gap-3 w-full max-w-md">
+<span id="time-current" class="text-[10px] text-on-surface-variant">0:00</span>
+<div id="progress-container" class="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden cursor-pointer">
+<div id="progress-fill" class="h-full bg-primary w-[0%] rounded-full shadow-[0_0_8px_rgba(114,254,143,0.6)]"></div>
+</div>
+<span id="time-total" class="text-[10px] text-on-surface-variant">0:30</span>
+</div>
+</div>
+<!-- Volume & Actions -->
+<div class="flex items-center justify-end gap-4 w-[30%]">
+<button class="text-neutral-400 hover:text-white">
+<span class="material-symbols-outlined text-xl" data-icon="lyrics">lyrics</span>
+</button>
+<button class="text-neutral-400 hover:text-white">
+<span class="material-symbols-outlined text-xl" data-icon="queue_music">queue_music</span>
+</button>
+<div class="flex items-center gap-2 group">
+<span class="material-symbols-outlined text-neutral-400 group-hover:text-white" data-icon="volume_up">volume_up</span>
+<div id="volume-container" class="w-24 h-1 bg-surface-container-highest rounded-full overflow-hidden cursor-pointer">
+<div id="volume-fill" class="h-full bg-on-surface-variant group-hover:bg-primary w-[70%] rounded-full"></div>
+</div>
+</div>
+<button class="text-neutral-400 hover:text-white">
+<span class="material-symbols-outlined text-xl" data-icon="fullscreen">fullscreen</span>
+</button>
+</div>
+</footer>
+
+<audio id="audio-el" preload="none"></audio>
+<script>
+let SESSION = null;
+let currentTrack = null;
+let trackQueue = [];
+let queueIndex = -1;
+const audio = document.getElementById('audio-el');
+
+async function spotifyFetch(endpoint) {
+    const url = `/api/spotify/${endpoint}${endpoint.includes('?') ? '&' : '?'}session=${SESSION}`;
+    try {
+        const res = await fetch(url);
+        if (res.status === 401) { logout(); return null; }
+        return await res.json();
+    } catch(e) { console.error(e); return null; }
+}
+
+function init() {
+    SESSION = localStorage.getItem('mw_spotify_session');
+    if (SESSION) {
+        loadProfile();
+        setupPlayer();
+        loadRecentlyPlayed();
+    }
+}
+
+function logout() {
+    localStorage.removeItem('mw_spotify_session');
+    window.location.reload();
+}
+
+async function loadProfile() {
+    const data = await spotifyFetch('me');
+    if (!data || data.error) return;
+    const name = data.display_name || 'User';
+    const first_name = name.split(' ')[0];
+    const img = data.images?.[0]?.url || 'https://via.placeholder.com/150';
+    document.getElementById('hero-welcome').textContent = `Welcome back, ${first_name}`;
+    document.getElementById('top-avatar').src = img;
+}
+
+async function loadRecentlyPlayed() {
+    if(!SESSION) return;
+    const data = await spotifyFetch('recently-played');
+    if (!data || !data.items || !data.items.length) return;
+    
+    const container = document.getElementById('recently-played-grid');
+    container.innerHTML = '';
+    
+    const uniqueTracks = [];
+    const ids = new Set();
+    for (const item of data.items) {
+        if (!ids.has(item.track.id)) { ids.add(item.track.id); uniqueTracks.push(item.track); }
+        if (uniqueTracks.length === 4) break; 
+    }
+    
+    uniqueTracks.forEach((track, i) => {
+        const img = track.album?.images?.[1]?.url || track.album?.images?.[0]?.url;
+        const artist = track.artists?.map(a=>a.name).join(', ');
+        const el = document.createElement('div');
+        el.className = 'flex items-center gap-4 p-3 rounded-lg hover:bg-surface-container-high transition-all group cursor-pointer border border-transparent hover:border-white/5';
+        el.onclick = () => { trackQueue = uniqueTracks; queueIndex = i; playTrack(track, i); };
+        el.innerHTML = `
+            <div class="w-14 h-14 rounded-md overflow-hidden flex-shrink-0 relative">
+            <img class="w-full h-full object-cover" src="${img}"/>
+            <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            </div>
+            </div>
+            <div class="flex-1 min-w-0">
+            <h5 class="text-on-surface font-bold text-sm truncate">${track.name}</h5>
+            <p class="text-on-surface-variant text-xs truncate">${artist}</p>
+            </div>
+            <button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-all">
+            <span class="material-symbols-outlined text-xl">favorite</span>
+            </button>
+        `;
+        container.appendChild(el);
+    });
+}
+
+async function playMockPlaylist(query) {
+    if(!SESSION) {
+        alert("Please login via the icon in the top right to play tracks.");
+        return;
+    }
+    const data = await spotifyFetch(`user-search?q=${encodeURIComponent(query)}&type=track`);
+    if(!data?.tracks?.items?.length) return;
+    trackQueue = data.tracks.items;
+    queueIndex = 0;
+    playTrack(trackQueue[0], 0);
+}
+
+function playTrack(track, idx) {
+    if (!track.preview_url) { 
+        queueIndex++;
+        if(queueIndex < trackQueue.length) playTrack(trackQueue[queueIndex], queueIndex);
+        return; 
+    }
+    currentTrack = track; queueIndex = idx;
+    
+    audio.src = track.preview_url;
+    audio.volume = parseFloat(document.getElementById('volume-fill').style.width || '70') / 100 || 0.7;
+    audio.play().catch(console.warn);
+
+    document.getElementById('player-thumb').src = track.album?.images?.[0]?.url || '';
+    document.getElementById('player-title').textContent = track.name;
+    document.getElementById('player-artist').textContent = track.artists?.map(a=>a.name).join(', ');
+}
+
+function setupPlayer() {
+    document.getElementById('btn-play-pause').onclick = () => {
+        if (!audio.src) return;
+        if (audio.paused) audio.play(); else audio.pause();
+    };
+    document.getElementById('btn-next').onclick = () => playNext();
+    document.getElementById('btn-prev').onclick = () => playPrev();
+
+    document.getElementById('progress-container').onclick = e => {
+        if (!audio.duration) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+    };
+    document.getElementById('volume-container').onclick = e => {
+        const r = e.currentTarget.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+        audio.volume = pct;
+        document.getElementById('volume-fill').style.width = `${pct * 100}%`;
+    };
+
+    audio.onplay = () => { document.getElementById('btn-play-icon').textContent = 'pause_circle'; };
+    audio.onpause = () => { document.getElementById('btn-play-icon').textContent = 'play_circle'; };
+    audio.onended = () => playNext();
+    audio.ontimeupdate = () => {
+        if(!audio.duration) return;
+        document.getElementById('progress-fill').style.width = `${(audio.currentTime/audio.duration)*100}%`;
+        document.getElementById('time-current').textContent = `0:${String(Math.floor(audio.currentTime)).padStart(2,'0')}`;
+    };
+}
+
+function playNext() {
+    if (!trackQueue.length) return;
+    let n = queueIndex;
+    do { n = (n+1)%trackQueue.length; } while (!trackQueue[n]?.preview_url && n!==queueIndex);
+    if(trackQueue[n]?.preview_url) playTrack(trackQueue[n], n);
+}
+function playPrev() {
+    if (!trackQueue.length) return;
+    let n = queueIndex;
+    do { n = (n-1+trackQueue.length)%trackQueue.length; } while (!trackQueue[n]?.preview_url && n!==queueIndex);
+    if(trackQueue[n]?.preview_url) playTrack(trackQueue[n], n);
+}
+
+init();
+</script>
+</body></html>

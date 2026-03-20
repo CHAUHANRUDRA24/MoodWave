@@ -318,6 +318,11 @@ app.get('/playlists.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'playlists.html'));
 });
 
+// Serve the Dashboard page
+app.get('/dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dashboard.html'));
+});
+
 // Spotify API Proxy Endpoints (App/Anonymous token)
 app.get('/api/spotify/search', async (req, res) => {
     try {
