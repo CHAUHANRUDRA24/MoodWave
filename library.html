@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Moodwave - Your Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#0e0e0e",
+              "surface-container-highest": "#262626",
+              "secondary-container": "#006d42",
+              "on-secondary": "#005e39",
+              "inverse-surface": "#fcf9f8",
+              "outline": "#767575",
+              "on-tertiary": "#005762",
+              "primary-fixed": "#72fe8f",
+              "on-error-container": "#ffd2c8",
+              "surface-tint": "#72fe8f",
+              "on-tertiary-fixed": "#003840",
+              "primary-container": "#1cb853",
+              "surface-container-low": "#131313",
+              "surface-container-lowest": "#000000",
+              "error": "#ff7351",
+              "surface-container": "#1a1a1a",
+              "outline-variant": "#484847",
+              "on-surface": "#ffffff",
+              "on-error": "#450900",
+              "surface-container-high": "#20201f",
+              "surface-bright": "#2c2c2c",
+              "tertiary-dim": "#00d4ee",
+              "on-primary-container": "#002a0c",
+              "inverse-on-surface": "#565555",
+              "secondary-fixed-dim": "#6deca8",
+              "on-primary-fixed": "#004a1c",
+              "secondary": "#7cfbb5",
+              "primary-dim": "#63ef82",
+              "tertiary-container": "#0fe3ff",
+              "on-tertiary-container": "#004d58",
+              "inverse-primary": "#006e2d",
+              "error-container": "#b92902",
+              "on-secondary-fixed-variant": "#006940",
+              "on-tertiary-fixed-variant": "#005763",
+              "error-dim": "#d53d18",
+              "primary-fixed-dim": "#63ef82",
+              "surface": "#0e0e0e",
+              "on-background": "#ffffff",
+              "surface-variant": "#262626",
+              "on-secondary-fixed": "#00492b",
+              "secondary-dim": "#6deca8",
+              "primary": "#72fe8f",
+              "on-secondary-container": "#e2ffe9",
+              "secondary-fixed": "#7cfbb5",
+              "tertiary-fixed": "#0fe3ff",
+              "on-surface-variant": "#adaaaa",
+              "surface-dim": "#0e0e0e",
+              "tertiary-fixed-dim": "#00d4ee",
+              "tertiary": "#88ebff",
+              "on-primary-fixed-variant": "#006a2b",
+              "on-primary": "#005f26"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(38, 38, 38, 0.6);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .liquid-glow {
+        box-shadow: 0 0 40px -10px rgba(114, 254, 143, 0.3);
+      }
+      body {
+        background-color: #0e0e0e;
+        color: #ffffff;
+      }
+    </style>
+</head>
+<body class="font-body selection:bg-primary/30">
+<!-- SideNavBar (Rail) -->
+<aside class="h-full w-64 fixed left-0 top-0 border-r border-white/10 bg-neutral-900/60 backdrop-blur-xl shadow-[20px_0_50px_rgba(0,0,0,0.5)] flex flex-col py-8 z-40">
+<div class="px-6 mb-10">
+<h1 class="text-2xl font-bold tracking-tighter text-white font-headline">Moodwave</h1>
+<p class="text-xs text-on-surface-variant tracking-wider mt-1 opacity-70">The Ethereal Conductor</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-300" href="/spotify.html">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-headline text-sm tracking-wide">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-[#1DB954]/10 text-[#1DB954] border-r-4 border-[#1DB954] font-semibold font-headline text-sm tracking-wide" href="/library.html">
+<span class="material-symbols-outlined" data-icon="library_music" style="font-variation-settings: 'FILL' 1;">library_music</span>
+<span class="font-headline text-sm tracking-wide">Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-300" href="/moods.html">
+<span class="material-symbols-outlined" data-icon="mood">mood</span>
+<span class="font-headline text-sm tracking-wide">Moods</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-300" href="/playlists.html">
+<span class="material-symbols-outlined" data-icon="playlist_play">playlist_play</span>
+<span class="font-headline text-sm tracking-wide">Playlists</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-highest/40 border border-white/5 cursor-pointer hover:bg-white/5 transition-colors" onclick="window.location.href='/api/spotify/login'" id="btn-login" title="Login with Spotify">
+<img id="sidebar-avatar" alt="User Profile Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Close up portrait of a stylish person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTMMqlgzk0_tsUbwsz1Z70ms7ufBaeiMCD5kvj0jxBc5HivmpbxeKulr88z6qKOfa-gz64y-NzPJMpFo04BisDYHKI0odwPrprotH3MBlWPokxUKl-vMAH3HP7D6WsJTKq8i2Rq99gpRuWq35qMLmVxfDVqMmB0i7eG54V19xCKOAmxQ_5oPC2tTqWT9R4Uu5TXMvEFQlQ2flPr3bkrcKDEkfdkro7zsLDOQMN9w5LEiC7MiqxN7N8mvr3xTK-QUNOlOMTAQIip2Q"/>
+<div class="overflow-hidden">
+<p id="sidebar-name" class="text-sm font-semibold truncate">Guest</p>
+<p id="sidebar-plan" class="text-xs text-on-surface-variant">Login to Spotify</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-transparent z-30 flex items-center justify-between px-8">
+<div class="flex-1 max-w-xl">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-high/60 border-none rounded-full py-2 pl-12 pr-4 text-sm focus:ring-1 focus:ring-primary/50 backdrop-blur-md transition-all" placeholder="Search your library..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-neutral-400 hover:text-white transition-colors opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-neutral-400 hover:text-white transition-colors opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 pb-32 px-8 min-h-screen">
+<!-- Hero Bento Section -->
+<section class="grid grid-cols-12 gap-6 mb-12">
+<!-- Featured 'Liked Songs' Card -->
+<div class="col-span-12 lg:col-span-7 relative group overflow-hidden rounded-xl bg-gradient-to-br from-secondary-container to-background p-8 flex flex-col justify-end min-h-[320px] liquid-glow cursor-pointer" onclick="playMockPlaylist('top tracks')">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+<div class="relative z-10">
+<div class="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-6 shadow-2xl shadow-primary/40">
+<span class="material-symbols-outlined text-on-primary text-4xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<h2 class="text-5xl font-extrabold font-headline tracking-tighter mb-2">Liked Songs</h2>
+<p id="liked-count" class="text-on-surface-variant font-medium mb-6">Load tracks... • Updated 2 hours ago</p>
+<button class="bg-gradient-to-r from-primary-fixed to-primary-container text-on-primary font-bold px-8 py-3 rounded-full flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform" onclick="event.stopPropagation(); playMockPlaylist('top tracks')">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                        Play All
+                    </button>
+</div>
+</div>
+<!-- Newest Addition / Spotlight -->
+<div class="col-span-12 lg:col-span-5 glass-card rounded-xl p-6 flex flex-col justify-between border border-white/5 shadow-lg group cursor-pointer" onclick="playMockPlaylist('electronic')">
+<div class="flex justify-between items-start">
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Newest Addition</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-white cursor-pointer">more_vert</span>
+</div>
+<div class="flex gap-6 items-center">
+<img alt="Album Art" class="w-32 h-32 rounded-lg object-cover shadow-2xl group-hover:scale-105 transition-transform duration-300" data-alt="Abstract colorful light waves background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTRun4V41b7t7payzasZSAinM6oivHhqcLSFSs84NaPy3GGVZcZs45snCQ4ccLfpNFc_DEhxzHr9xF4ftEwqbEtyCVBof5jhqpYg_8b8HEyE2HL3SRT_LOWoXoZok0jxId-raTZWwkhcFCBodL8ltk4_riKrcFFUSQIvYhB5HEs8XHC8604Y55feSG8PzNKxoS_eUQp4tiD6oxH0GywBV7HO3FhYwpNyaKevgpW6LwC9SGfJhSuuqlF2PbaxfbWH_pVh4bxiPNDsM"/>
+<div>
+<h3 class="text-2xl font-bold font-headline leading-tight">Vapor Theory</h3>
+<p class="text-on-surface-variant mb-4">The Midnight Pulse</p>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container-highest rounded-full text-[10px] font-bold uppercase border border-white/5">Electronic</span>
+<span class="px-3 py-1 bg-surface-container-highest rounded-full text-[10px] font-bold uppercase border border-white/5">2024</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Library Filter Chips -->
+<div class="flex gap-3 mb-8 overflow-x-auto pb-2 no-scrollbar">
+<button class="px-6 py-2 bg-primary text-on-primary rounded-full text-sm font-semibold">All</button>
+<button class="px-6 py-2 bg-surface-container-highest text-on-surface hover:bg-surface-bright transition-colors rounded-full text-sm font-semibold">Playlists</button>
+<button class="px-6 py-2 bg-surface-container-highest text-on-surface hover:bg-surface-bright transition-colors rounded-full text-sm font-semibold">Albums</button>
+<button class="px-6 py-2 bg-surface-container-highest text-on-surface hover:bg-surface-bright transition-colors rounded-full text-sm font-semibold">Artists</button>
+<button class="px-6 py-2 bg-surface-container-highest text-on-surface hover:bg-surface-bright transition-colors rounded-full text-sm font-semibold">Podcasts</button>
+</div>
+<!-- Content Grid -->
+<section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6" id="library-grid">
+<!-- Playlist Card -->
+<div class="group cursor-pointer" onclick="playMockPlaylist('Midnight Drive')">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-lg">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Neon lights reflecting on a rain-slicked street" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRHH1VQb7ZSVmxmMxDuIHDGfOLMSrFUhdICg5mEJLGAn2v4UtHSbUeQoWdrF9duY_rvff6FozmFB0OUX44y2Q6HxZOhzLPwijj8nAvOXoCiF17JMBXfTK59CwfCvS1MsqJpgsIXPUIcvZSgNr-E6_Qr0zRfBd_-L-13ecKl8LKcPdHX7vipSHutE_eK9SgF8zl8RAYu4V6-wltHuk9HvZ5gAcmdrNSQfIWb4pLQWK_iTdJDz2xYYfiTKj-gi4HTvr0m2_y9TQASmU"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-xl translate-y-4 group-hover:translate-y-0 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold truncate text-sm">Midnight Drive</h4>
+<p class="text-xs text-on-surface-variant">By Moodwave • 45 songs</p>
+</div>
+<!-- Album Card -->
+<div class="group cursor-pointer" onclick="playMockPlaylist('Electric Dreams')">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-lg">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Silhouetted person playing guitar at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1zwApxtZWXptzvnlwnVsJXtHMHCFkQwrZguf8oJRQGcPCWpHfBYjkXxhetwRXiJ1LkD26lO9K7nIVY0S9ReJ0iu91cvOG7PGQHJHc8C_TpMFJJxr67e8IrEocapCDezPUbg6tchIJVgmmLYY5J0xRSAJhZRI9tLTj2uyXU87bOCh47Vbff3Ykf522SD9ArSVeQMxPm5rRKCI51aCYiQLlCRB8ZUdy9vuxVcB8wnGOdAzQ4yGljc2BFLhCfrPbiJxY6SmG2oH8CwA"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-xl translate-y-4 group-hover:translate-y-0 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold truncate text-sm">Electric Dreams</h4>
+<p class="text-xs text-on-surface-variant">The Synthetics</p>
+</div>
+<!-- Artist Card -->
+<div class="group cursor-pointer text-center" onclick="playMockPlaylist('Luna Sol')">
+<div class="relative aspect-square rounded-full overflow-hidden mb-3 shadow-lg border-2 border-transparent group-hover:border-primary/50 transition-all p-1">
+<img class="w-full h-full object-cover rounded-full transition-transform duration-500 group-hover:scale-105" data-alt="Singer performing on stage with atmospheric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCalIohwgussTcGhh2SSrUozWzHYRzvGYDQ6S_PEWwniy3aRCvcPP_OfU-rDRHMNMKPxYpZNd5X8kp0jRmcBen3W7q_jntpuIXsI5mfWXAgbS7m4sjlSy9AH16uK88xFGxjC44QAHjCMg8BCtqp9-69e-g3q6dHMnxFdSS3M6biTSRftHPsAFAbYzJ_OtnXvRpnmpgWz_KEo9CpTH5wlJP7XoHM54bBimq18OFhNMIdoZAOznDl8eh6zhy4vUFcFEeC0f8ElVf1H1k"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-full">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-xl translate-y-4 group-hover:translate-y-0 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold truncate text-sm">Luna Sol</h4>
+<p class="text-xs text-on-surface-variant">Artist</p>
+</div>
+<!-- Repeated Content for Grid Density -->
+<div class="group cursor-pointer" onclick="playMockPlaylist('Lofi Beats')">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-lg">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Abstract colorful swirling ink in water" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp-EGIJSHoPS0IG7s0BDMXcbkfT1AhmX0J-n0GvGeoLFGgsfBYlqNFDkKPxIMYb-Z1mkIEYsdxtNfR3EbVc2c9HgRdOei-5DW8DCU4kiutQ-F5fyk4G0RBTHe0irCk92zA9lOloQHv0K7cIfwC90Z75zJGYQsy_1n03MyQ5gTNKBTj1h1zoZAYIx1igLIkfRKartZBHk_DOaYlz3p4clzryNfc1QGP80znFPWvZLG3zSw6Sx1qVhX6byFsfe26VjS5IiXd2HjwFoo"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-xl translate-y-4 group-hover:translate-y-0 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold truncate text-sm">Chill Lofi Beats</h4>
+<p class="text-xs text-on-surface-variant">Playlist</p>
+</div>
+<div class="group cursor-pointer" onclick="playMockPlaylist('Techno')">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-lg">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Concert stage with laser light show" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLzMtwgHUyPdTxVzDcvAfk0u5sS5K-JEk3oXsCPyX0QYWkkhj-wE8Wt7vePHhb9vu7vuqcXFSBhpQKsKgVszeErukevaCUjaKV6iQsOKNXSiu9KawnAiV3crAv71SLGY-utBpVIlKlvkNwgtHgIBdlCf3tpIYw9k-LBJK5P9lw7HsAb-sXpnivlnICJvOGempKtnxio_qPbCKVRo5GCHkbGrvhFUcTvyHdrZwqq2oi9jF7CBt1tkzfWm6bX8j4DL-sMkJ7HCyOHTw"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-xl translate-y-4 group-hover:translate-y-0 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold truncate text-sm">Techno Origins</h4>
+<p class="text-xs text-on-surface-variant">By Various Artists</p>
+</div>
+<div class="group cursor-pointer" onclick="playMockPlaylist('Studio Sessions')">
+<div class="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-lg">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Microphone in a dark recording studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgWd5vw4IdFAC89Y7dHI6fFfj-aJZ3KCPVlzNX_GBaWoChnytztHjEGJlU24v3vxA5EdQ0K5fYB2PPZokYsxNPlUuWY_C4szJmm6GrFGoN1qqq9gYdZZjEsKP9EKQ93qzKprVc1FC7Zit7T_tognjySxtMhdWzQfxQMN2aDoG2WVS-WAzAydidqzkL_WJjoTTS3YQA1-we0UHMTCoAW4P-7V6Uc3ud5PWHg1xnFn_ol0NLMaNUQCXo3sFrW8tJ_V7Meimbu7GRsIA"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-xl translate-y-4 group-hover:translate-y-0 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<h4 class="font-bold truncate text-sm">Studio Sessions</h4>
+<p class="text-xs text-on-surface-variant">Album • 2023</p>
+</div>
+</section>
+</main>
+<!-- Footer / Player Bar -->
+<footer class="fixed bottom-0 left-0 w-full h-24 border-t border-white/5 bg-[#1a1a1a]/80 backdrop-blur-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.8)] z-50 flex items-center justify-between px-10">
+<!-- Now Playing -->
+<div class="flex items-center gap-4 w-1/4">
+<img id="player-thumb" alt="Current Track" class="w-14 h-14 rounded-md object-cover" data-alt="Abstract colorful light waves background thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAq85yh271RvbpsgSngOeuw8Gj3koKPxIvzWyKdrZpXD85dtdLHxWU44nQjTXjXewk4xp9jDXvjK3Ew8WMGwpYe8oTBh-M5T9az0J-RYLTCA-qcsN8pIlGGIl_io60-25n1YHJEgxygDggs5SkXmJ4FGr2VNXe4HcyOsatopHf20rEOJYU-xUsJrXlJic2lcgwAhsHCh19bbLBzHCAswP5tHuGQeKoVq3lXC_dHdb-Ru1YyZ66VZ8SEYDVtyPVRyrdYrdvoB2bOPas"/>
+<div class="overflow-hidden">
+<p id="player-title" class="font-bold text-primary text-sm truncate">Select a Track</p>
+<p id="player-artist" class="text-xs text-on-surface-variant truncate">Moodwave Library</p>
+</div>
+<button class="text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<!-- Player Controls -->
+<div class="flex flex-col items-center gap-2 flex-1 max-w-xl">
+<div class="flex items-center gap-6">
+<button class="text-neutral-500 hover:text-white transition-colors"><span class="material-symbols-outlined">shuffle</span></button>
+<button id="btn-prev" class="text-white hover:text-primary transition-colors"><span class="material-symbols-outlined">skip_previous</span></button>
+<button id="btn-play-pause" class="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-transform">
+<span id="btn-play-icon" class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<button id="btn-next" class="text-white hover:text-primary transition-colors"><span class="material-symbols-outlined">skip_next</span></button>
+<button class="text-neutral-500 hover:text-white transition-colors"><span class="material-symbols-outlined">repeat</span></button>
+</div>
+<div class="w-full flex items-center gap-3">
+<span id="time-current" class="text-[10px] text-neutral-500 font-mono">0:00</span>
+<div id="progress-container" class="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden relative cursor-pointer">
+<div id="progress-fill" class="absolute top-0 left-0 h-full w-[0%] bg-primary"></div>
+</div>
+<span id="time-total" class="text-[10px] text-neutral-500 font-mono">0:30</span>
+</div>
+</div>
+<!-- Volume & Extras -->
+<div class="flex items-center justify-end gap-4 w-1/4">
+<button class="text-neutral-500 hover:text-white transition-colors"><span class="material-symbols-outlined">lyrics</span></button>
+<button class="text-neutral-500 hover:text-white transition-colors"><span class="material-symbols-outlined">queue_music</span></button>
+<button class="text-neutral-500 hover:text-white transition-colors"><span class="material-symbols-outlined">devices</span></button>
+<div class="flex items-center gap-2 group">
+<span class="material-symbols-outlined text-neutral-500 text-lg group-hover:text-white">volume_up</span>
+<div id="volume-container" class="w-24 h-1 bg-surface-container-highest rounded-full overflow-hidden relative cursor-pointer">
+<div id="volume-fill" class="absolute top-0 left-0 h-full w-[70%] bg-white/60 group-hover:bg-primary transition-colors"></div>
+</div>
+</div>
+</div>
+</footer>
+
+<audio id="audio-el" preload="none"></audio>
+<script>
+let SESSION = null;
+let currentTrack = null;
+let trackQueue = [];
+let queueIndex = -1;
+const audio = document.getElementById('audio-el');
+
+async function spotifyFetch(endpoint) {
+    const url = `/api/spotify/${endpoint}${endpoint.includes('?') ? '&' : '?'}session=${SESSION}`;
+    try {
+        const res = await fetch(url);
+        if (res.status === 401) { logout(); return null; }
+        return await res.json();
+    } catch(e) { console.error(e); return null; }
+}
+
+function init() {
+    SESSION = localStorage.getItem('mw_spotify_session');
+    if (SESSION) {
+        loadProfile();
+        setupPlayer();
+        loadRecentlyPlayed();
+    }
+}
+
+function logout() {
+    localStorage.removeItem('mw_spotify_session');
+    window.location.reload();
+}
+
+async function loadProfile() {
+    const data = await spotifyFetch('me');
+    if (!data || data.error) return;
+    const name = data.display_name || 'User';
+    const plan = data.product === 'premium' ? 'Premium' : 'Free';
+    const img = data.images?.[0]?.url || 'https://via.placeholder.com/150';
+    document.getElementById('sidebar-name').textContent = name;
+    document.getElementById('sidebar-plan').textContent = `${plan} Member`;
+    document.getElementById('sidebar-avatar').src = img;
+}
+
+async function loadRecentlyPlayed() {
+    if(!SESSION) return;
+    const data = await spotifyFetch('recently-played');
+    if (!data || !data.items || !data.items.length) return;
+    document.getElementById('liked-count').textContent = `Your Library • Updated recently`;
+}
+
+async function playMockPlaylist(query) {
+    if(!SESSION) {
+        alert("Please login via the sidebar link to access tracks.");
+        return;
+    }
+    let data;
+    if(query === 'top tracks') {
+        data = await spotifyFetch(`top-tracks`);
+        if(!data?.items?.length) data = {tracks: {items: []}};
+        else data = {tracks: {items: data.items}}; // normalize structure
+    } else {
+        data = await spotifyFetch(`user-search?q=${encodeURIComponent(query)}&type=track`);
+    }
+    
+    if(!data?.tracks?.items?.length && !data?.items?.length) return;
+    trackQueue = data.tracks?.items || data.items || [];
+    queueIndex = 0;
+    playTrack(trackQueue[0], 0);
+}
+
+function playTrack(track, idx) {
+    if (!track.preview_url) { 
+        queueIndex++;
+        if(queueIndex < trackQueue.length) playTrack(trackQueue[queueIndex], queueIndex);
+        return; 
+    }
+    currentTrack = track; queueIndex = idx;
+    
+    audio.src = track.preview_url;
+    audio.volume = parseFloat(document.getElementById('volume-fill').style.width || '70') / 100 || 0.7;
+    audio.play().catch(console.warn);
+
+    document.getElementById('player-thumb').src = track.album?.images?.[0]?.url || '';
+    document.getElementById('player-title').textContent = track.name;
+    document.getElementById('player-artist').textContent = track.artists?.map(a=>a.name).join(', ');
+}
+
+function setupPlayer() {
+    document.getElementById('btn-play-pause').onclick = () => {
+        if (!audio.src) return;
+        if (audio.paused) audio.play(); else audio.pause();
+    };
+    document.getElementById('btn-next').onclick = () => playNext();
+    document.getElementById('btn-prev').onclick = () => playPrev();
+
+    document.getElementById('progress-container').onclick = e => {
+        if (!audio.duration) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+    };
+    document.getElementById('volume-container').onclick = e => {
+        const r = e.currentTarget.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+        audio.volume = pct;
+        document.getElementById('volume-fill').style.width = `${pct * 100}%`;
+    };
+
+    audio.onplay = () => { document.getElementById('btn-play-icon').textContent = 'pause'; };
+    audio.onpause = () => { document.getElementById('btn-play-icon').textContent = 'play_arrow'; };
+    audio.onended = () => playNext();
+    audio.ontimeupdate = () => {
+        if(!audio.duration) return;
+        document.getElementById('progress-fill').style.width = `${(audio.currentTime/audio.duration)*100}%`;
+        document.getElementById('time-current').textContent = `0:${String(Math.floor(audio.currentTime)).padStart(2,'0')}`;
+    };
+}
+
+function playNext() {
+    if (!trackQueue.length) return;
+    let n = queueIndex;
+    do { n = (n+1)%trackQueue.length; } while (!trackQueue[n]?.preview_url && n!==queueIndex);
+    if(trackQueue[n]?.preview_url) playTrack(trackQueue[n], n);
+}
+function playPrev() {
+    if (!trackQueue.length) return;
+    let n = queueIndex;
+    do { n = (n-1+trackQueue.length)%trackQueue.length; } while (!trackQueue[n]?.preview_url && n!==queueIndex);
+    if(trackQueue[n]?.preview_url) playTrack(trackQueue[n], n);
+}
+
+init();
+</script>
+</body></html>
