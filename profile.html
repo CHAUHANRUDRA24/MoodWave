@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Moodwave - Your Profile</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#0e0e0e",
+              "on-background": "#ffffff",
+              "primary-fixed": "#72fe8f",
+              "tertiary-fixed-dim": "#00d4ee",
+              "on-secondary-fixed-variant": "#006940",
+              "on-secondary": "#005e39",
+              "tertiary-container": "#0fe3ff",
+              "outline-variant": "#484847",
+              "inverse-on-surface": "#565555",
+              "on-tertiary-fixed": "#003840",
+              "surface": "#0e0e0e",
+              "on-primary-fixed-variant": "#006a2b",
+              "inverse-surface": "#fcf9f8",
+              "on-tertiary-container": "#004d58",
+              "tertiary": "#88ebff",
+              "secondary": "#7cfbb5",
+              "on-surface-variant": "#adaaaa",
+              "surface-container-low": "#131313",
+              "secondary-fixed-dim": "#6deca8",
+              "on-tertiary": "#005762",
+              "on-surface": "#ffffff",
+              "secondary-dim": "#6deca8",
+              "on-error": "#450900",
+              "on-secondary-container": "#e2ffe9",
+              "on-error-container": "#ffd2c8",
+              "primary-dim": "#63ef82",
+              "tertiary-fixed": "#0fe3ff",
+              "error-dim": "#d53d18",
+              "primary-fixed-dim": "#63ef82",
+              "inverse-primary": "#006e2d",
+              "primary": "#72fe8f",
+              "surface-bright": "#2c2c2c",
+              "surface-container-lowest": "#000000",
+              "tertiary-dim": "#00d4ee",
+              "surface-variant": "#262626",
+              "secondary-fixed": "#7cfbb5",
+              "surface-dim": "#0e0e0e",
+              "on-primary": "#005f26",
+              "on-primary-container": "#002a0c",
+              "on-tertiary-fixed-variant": "#005763",
+              "on-primary-fixed": "#004a1c",
+              "primary-container": "#1cb853",
+              "surface-container-high": "#20201f",
+              "surface-container-highest": "#262626",
+              "secondary-container": "#006d42",
+              "on-secondary-fixed": "#00492b",
+              "surface-tint": "#72fe8f",
+              "outline": "#767575",
+              "error-container": "#b92902",
+              "error": "#ff7351",
+              "surface-container": "#1a1a1a"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .liquid-glass {
+            background: linear-gradient(135deg, rgba(38, 38, 38, 0.6) 0%, rgba(26, 26, 26, 0.4) 100%);
+            backdrop-filter: blur(20px);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(114, 254, 143, 0.3);
+        }
+        
+        .truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary min-h-screen">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-neutral-950/60 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(29,185,84,0.08)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold bg-gradient-to-br from-green-400 to-green-600 bg-clip-text text-transparent font-headline tracking-tight">Moodwave</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-neutral-400 hover:text-green-400 font-bold transition-colors duration-300" href="/spotify.html">Home</a>
+<a class="text-green-400 transition-colors duration-300" href="/profile.html">Explore</a>
+<a class="text-neutral-400 hover:text-green-400 transition-colors duration-300" href="/library.html">Library</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-neutral-400 hover:text-green-400 transition-colors duration-300 active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-neutral-400 hover:text-green-400 transition-colors duration-300 active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/20 cursor-pointer" onclick="window.location.href='/api/spotify/login'">
+<img id="top-avatar" class="w-full h-full object-cover" data-alt="User Spotify Profile Picture Portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABBaXdUY714cquFgpxlHSPVWJZA5MqbdSsbhE3-ae7j5yqk0Z5kPyIkOPJQpc6Odv_dCibIkBAHMxIjkhtUP8yXzkqoe-Ql8ZouzeoATU-XB0JRRLTBH_N3b6xXxWJ1qT0vJSloIZfZXzsR1xRtoJ36JVSt7TMDtSPNPs1cETkNWGGOlmrCi-u12cScRCYz7pqAUckt134Hy9PF9_w-27Af_y6mnwE4gjRoAeHPo3EpelQgcAFSQQevYh_v24DZN1YWzY6pWn13nA"/>
+</div>
+</div>
+</nav>
+
+<div class="flex pt-16 min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col gap-4 p-6 h-[calc(100vh-4rem)] sticky top-16 w-64 border-r border-neutral-800/20 bg-neutral-900/40 backdrop-blur-2xl overflow-y-auto">
+<div class="flex items-center gap-3 mb-6 p-4 rounded-lg bg-surface-container cursor-pointer hover:bg-white/5 transition-colors" onclick="window.location.href='/api/spotify/login'">
+<div class="relative">
+<img id="sidebar-avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Spotify Avatar Portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjIu0Sx9GWbcYkZLY4l9s3URwX0rilqGj0xPxeOdxdZ863UCfl4ZLHZJvHYiAPoXd45DXS0A84hcR4auDvt9hPWDeZuuBSRq6EXufixT8Cw62P2QTGCa-bVsWqQZqvdCvPJBeFtSul-UTxDdN6qV-AraUXFtXuwfsOOfYhC0rIeYGdOrygkUaaqQQfFLFyMIRGtX3qzOOlzkFG6MTd-JqVgFVFqTmT7IfmBe-GFnY4HdVq2GFXpdc815uqJm9mDOgNk0G-68_3EBY"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-primary rounded-full border-2 border-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-on-primary font-bold">check</span>
+</div>
+</div>
+<div class="overflow-hidden">
+<p id="sidebar-name" class="text-sm font-bold font-headline truncate">Guest</p>
+<p id="sidebar-plan" class="text-[10px] text-on-surface-variant truncate">Connect to Spotify</p>
+</div>
+</div>
+<div class="space-y-2">
+<a class="flex items-center gap-3 text-neutral-400 px-4 py-2 hover:bg-neutral-800/50 rounded-full transition-all hover:translate-x-1 duration-200" href="/spotify.html">
+<span class="material-symbols-outlined">home</span>
+<span class="font-medium text-sm">Home</span>
+</a>
+<a class="flex items-center gap-3 text-neutral-400 px-4 py-2 hover:bg-neutral-800/50 rounded-full transition-all hover:translate-x-1 duration-200" href="/library.html">
+<span class="material-symbols-outlined">library_music</span>
+<span class="font-medium text-sm">Library</span>
+</a>
+<a class="flex items-center gap-3 text-neutral-400 px-4 py-2 hover:bg-neutral-800/50 rounded-full transition-all hover:translate-x-1 duration-200" href="/moods.html">
+<span class="material-symbols-outlined">wb_twilight</span>
+<span class="font-medium text-sm">Moods</span>
+</a>
+<a class="flex items-center gap-3 text-neutral-400 px-4 py-2 hover:bg-neutral-800/50 rounded-full transition-all hover:translate-x-1 duration-200" href="/playlists.html">
+<span class="material-symbols-outlined">queue_music</span>
+<span class="font-medium text-sm">Playlists</span>
+</a>
+</div>
+<div class="mt-auto">
+<button id="btn-login-sidebar" onclick="window.location.href='/api/spotify/login'" class="w-full bg-surface-container-highest text-primary font-bold py-3 rounded-full border border-primary/20 hover:bg-primary/10 transition-colors">
+                    Connect Spotify
+                </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-6 md:p-12 pb-32 max-w-7xl mx-auto w-full">
+<!-- Hero User Profile Section -->
+<section class="relative mb-16">
+<!-- Decorative Glow -->
+<div class="absolute -top-20 -left-20 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
+<div class="liquid-glass rounded-xl p-8 md:p-12 flex flex-col md:flex-row items-center md:items-end gap-8 relative overflow-hidden border border-white/5">
+<!-- Profile Picture with Glow -->
+<div class="relative shrink-0">
+<div class="absolute inset-0 bg-primary/20 blur-2xl rounded-full"></div>
+<img id="hero-avatar" class="relative w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-surface shadow-2xl" data-alt="Large Spotify User Profile Portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALTQ0lrC_57Xuja-f6yISK44dY7KKVn0fAGcp7HiW0-DrDKdTQLwP33TuFqEJNx4Nf1NV_6puV5WIW7109h69R5VquROVUpaGTWvu4yCCMwc6qB4QLYzynFMoUjxcB5HqIixbY4a9neHbcwxtweVybtaOCVNTKB9PpGJpgE3ZuoDjWAhEDnjO4hR7zzzw_Rqhm64fMm1IB4i3m5dHVp-4gFfy5AQ79P0o83uYjB-AGrVDZo6q3vI3uA_FOAqfOayGFnr7xnP6IifM"/>
+</div>
+<div class="flex-1 text-center md:text-left min-w-0">
+<div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-2">
+<span id="hero-tier" class="bg-primary/20 text-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-primary/30">Free Tier</span>
+</div>
+<h1 id="hero-name" class="text-4xl md:text-7xl font-extrabold font-headline tracking-tighter mb-4 text-glow truncate w-full">Spotify Guest</h1>
+<div class="flex items-center justify-center md:justify-start gap-6 text-on-surface-variant font-medium">
+<div class="flex flex-col">
+<span id="hero-followers" class="text-on-surface text-xl font-bold">0</span>
+<span class="text-[10px] uppercase tracking-wider">Followers</span>
+</div>
+<div class="w-px h-8 bg-outline-variant/20"></div>
+<div class="flex flex-col">
+<span class="text-on-surface text-xl font-bold">?</span>
+<span class="text-[10px] uppercase tracking-wider">Playlists</span>
+</div>
+<div class="w-px h-8 bg-outline-variant/20"></div>
+<button class="flex items-center gap-2 text-primary hover:text-white transition-colors" onclick="window.location.href='/api/spotify/login'">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">share</span>
+<span class="text-[10px] uppercase tracking-wider font-bold">Share Profile</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Grid Content -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<!-- Left Column: Recently Played (Editorial Bento Style) -->
+<div class="lg:col-span-1 space-y-8">
+<div class="flex items-center justify-between mb-2">
+<h2 class="text-xl font-bold font-headline">Recently Played</h2>
+<button class="text-[10px] font-bold text-primary hover:underline">VIEW ALL</button>
+</div>
+<div class="grid grid-cols-1 gap-4" id="recent-container">
+<!-- Recently Played Cards Dynamic -->
+<div class="group relative overflow-hidden rounded-lg bg-surface-container-low hover:bg-surface-container transition-all p-4 flex items-center gap-4 cursor-pointer" onclick="playMockPlaylist('Stardust')">
+<img class="w-16 h-16 rounded object-cover shadow-lg group-hover:scale-105 transition-transform" data-alt="Album Cover Art Abstract Neon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALT06RQs5Tcc77oZdXafvxoqfjAXDEScp3FYL4s6wgNz5kRbCfK06ioYY6GpqqqChpL6RHjqEzREO8vEL6F5fZ5AygX8ejHqcNgJ_MtiHpy-G5CagZg_3ss3wUYP-WqHlMcCQk377lRSwvEQbnTt9dDy3JqleQb7KoET7xPi_VCqCOe2Ow5Kd46kbrE280BXXE4iYY36svflIOnrbMZqvi-Rqt1Ju45Kc2mS6y53GfFtF53GqetlqnDexZCTSaUxC1JUcEQ66UifU"/>
+<div>
+<h4 class="font-bold text-sm">Stardust Echoes</h4>
+<p class="text-xs text-on-surface-variant">Solaris Dream</p>
+</div>
+<button class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-on-primary p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="group relative overflow-hidden rounded-lg bg-surface-container-low hover:bg-surface-container transition-all p-4 flex items-center gap-4 cursor-pointer" onclick="playMockPlaylist('Midnight Pulse')">
+<img class="w-16 h-16 rounded object-cover shadow-lg group-hover:scale-105 transition-transform" data-alt="Album Cover Art Dark Moody" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3SaJcStnoLg9N0eBJFfbxnSI1VByXM7WWgNgDR55MgQtpZjqOM0zmMdg85i9c8SiArGKwSbAPPZ4e5xYYV825cKAGHUm1dAUHJ8Xb6CU1ZEI1i4ZbzBwxl_5GGmQap58akf_6cbFc7vess6EETwFaRl7zfrwtMUum80840nKE5dg0-WAoWlZtf1HtdUlkbg67ca8yo6GCVFmvSltlSiyligg_o39iYXMx5OrXqQk8mIi5UWNULUGUsZTq59f8KS4vUkXzgql-BUM"/>
+<div>
+<h4 class="font-bold text-sm">Midnight Pulse</h4>
+<p class="text-xs text-on-surface-variant">The Void</p>
+</div>
+<button class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-on-primary p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Mood Selection Chips -->
+<div class="pt-8">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">Discovery Moods</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold cursor-pointer hover:brightness-110 transition-all" onclick="playMockPlaylist('Euphoric music')">Euphoric</span>
+<span class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-bold cursor-pointer hover:text-white transition-all" onclick="playMockPlaylist('Deep Focus')">Deep Focus</span>
+<span class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-bold cursor-pointer hover:text-white transition-all" onclick="playMockPlaylist('Cyberpunk synthwave')">Cyberpunk</span>
+<span class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-bold cursor-pointer hover:text-white transition-all" onclick="playMockPlaylist('Lofi Chill')">Lofi Chill</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Your Top Tracks (Expanded List) -->
+<div class="lg:col-span-2">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-3xl font-bold font-headline">Your Top Tracks</h2>
+<div class="flex gap-2">
+<button class="p-2 rounded-full bg-surface-container-highest text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<button class="p-2 rounded-full bg-surface-container-highest text-primary transition-colors">
+<span class="material-symbols-outlined">list</span>
+</button>
+</div>
+</div>
+<div class="space-y-2">
+<!-- Track Item Header -->
+<div class="grid grid-cols-12 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+<div class="col-span-1">#</div>
+<div class="col-span-6 md:col-span-5">Title</div>
+<div class="hidden md:block col-span-3">Album</div>
+<div class="col-span-5 md:col-span-3 text-right">Duration</div>
+</div>
+<!-- Track Listings -->
+<div id="top-tracks-container">
+<!-- Will be replaced dynamically -->
+<div class="group grid grid-cols-12 items-center px-4 py-3 rounded-lg hover:bg-surface-container-high transition-all cursor-pointer" onclick="playMockPlaylist('Neon Horizon')">
+<div class="col-span-1 text-on-surface-variant group-hover:hidden">1</div>
+<div class="col-span-1 hidden group-hover:block"><span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">play_arrow</span></div>
+<div class="col-span-6 md:col-span-5 flex items-center gap-4">
+<img class="w-10 h-10 rounded" data-alt="Album Art Track 1 Abstract" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRlEqzHHSylTT82EjMz5vOZ9aQPZ3SpFzkXWL3811vTQqY5Cayb3oAqOSlAODxQaka396HN5CE1tEs3qA8eKZ1CHQaAHVwGiQU9pJtXcA9_jUnpb7j9hubJnIiT1MUrWKRfJLslQz5GAN6js97VblwIHu2GZtkk_P50swoQBdZL2hrPwW3OdrOLBwC9OCq-6hfF_7tXbftg_rX6tTNMVDRN3pzbS862LAfVC-SD2A5Vjb7pp1Z2nCqQIKg5k50MReawcuiN7qkFZA"/>
+<div class="truncate">
+<p class="font-bold text-sm truncate">Neon Horizon</p>
+<p class="text-xs text-on-surface-variant truncate">Arcade High</p>
+</div>
+</div>
+<div class="hidden md:block col-span-3 text-sm text-on-surface-variant truncate">Retro Future</div>
+<div class="col-span-5 md:col-span-3 text-right text-xs text-on-surface-variant">3:42</div>
+</div>
+</div>
+</div>
+<!-- Recommended Based on Taste (Bento Element) -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-gradient-to-br from-green-500/20 to-transparent p-6 rounded-xl border border-primary/10 flex flex-col justify-between aspect-[2/1]">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Discover Weekly</span>
+<h3 class="text-2xl font-bold font-headline max-w-[200px]">New gems based on your mood.</h3>
+<button class="w-fit px-6 py-2 bg-primary text-on-primary rounded-full text-xs font-bold active:scale-95 transition-transform" onclick="playMockPlaylist('discover weekly')">LISTEN NOW</button>
+</div>
+<div class="bg-gradient-to-br from-tertiary-container/20 to-transparent p-6 rounded-xl border border-tertiary-container/10 flex flex-col justify-between aspect-[2/1]">
+<span class="text-[10px] font-bold uppercase tracking-widest text-tertiary">Mood Analysis</span>
+<h3 class="text-2xl font-bold font-headline max-w-[200px]">Your current wave is Euphoric.</h3>
+<button class="w-fit px-6 py-2 bg-tertiary-container text-on-tertiary-container rounded-full text-xs font-bold active:scale-95 transition-transform" onclick="playMockPlaylist('euphoric mood')">EXPLORE MOOD</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+<!-- BottomNavBar (The Player Bar) -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex flex-col bg-neutral-950/80 backdrop-blur-3xl border-t border-neutral-800/20 px-8 pb-safe h-24 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+<!-- Progress Bar -->
+<div id="progress-container" class="absolute top-0 left-0 w-full h-1 bg-surface-container-highest group cursor-pointer">
+<div id="progress-fill" class="h-full bg-primary relative w-[0%]">
+<div class="absolute -right-1 -top-1 w-3 h-3 bg-white rounded-full shadow-lg scale-0 group-hover:scale-100 transition-transform"></div>
+</div>
+</div>
+<div class="flex-1 flex justify-between items-center px-4">
+<!-- Currently Playing Info -->
+<div class="flex items-center gap-4 w-1/3">
+<img id="player-thumb" class="w-12 h-12 rounded shadow-lg object-cover" data-alt="Small Current Playing Thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnP74V3biHAS7u2fClI-EgEchZQQSQHTIrk50xpGzkaw5gyUg0ND2oGvaphfHxdmOJ7rKOXVVhRlimnkRJfW_8ZGakDLS9q-RYkFgW7m819Cezh3rvDNQqQsuze5J7KekBN7awybljTYIXxghK-8ahQGjoIEhtMnFEns-6jkECxGfFjvnaOiDS5_QTBdrVypzqsLy5YPy9z7mP7cYIxCakEkGioXNBJgB9HM0IQFE6JYSdIgTXfRjfegqKeA3T1LJR1gMhosArStI"/>
+<div class="hidden sm:block min-w-0">
+<p id="player-title" class="text-sm font-bold truncate">Select a Track</p>
+<p id="player-artist" class="text-[10px] text-on-surface-variant truncate">Moodwave Profile</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<!-- Playback Controls -->
+<div class="flex items-center gap-6">
+<button class="text-neutral-300 hover:text-white transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">shuffle</span>
+</button>
+<button id="btn-prev" class="text-neutral-300 hover:text-white transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">skip_previous</span>
+</button>
+<button id="btn-play-pause" class="text-green-400 scale-110 active:scale-90 transition-all duration-150">
+<span id="btn-play-icon" class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</button>
+<button id="btn-next" class="text-neutral-300 hover:text-white transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">skip_next</span>
+</button>
+<button class="text-neutral-300 hover:text-white transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">repeat</span>
+</button>
+</div>
+<!-- Volume & Secondary Controls -->
+<div class="flex items-center justify-end gap-6 w-1/3">
+<div class="hidden md:flex items-center gap-2 group cursor-pointer" id="volume-container">
+<span class="material-symbols-outlined text-neutral-300 text-lg group-hover:text-white">volume_up</span>
+<div class="w-24 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div id="volume-fill" class="h-full bg-on-surface-variant group-hover:bg-primary transition-colors" style="width: 70%;"></div>
+</div>
+</div>
+<button class="text-neutral-300 hover:text-white transition-all">
+<span class="material-symbols-outlined">open_in_full</span>
+</button>
+</div>
+</div>
+</footer>
+
+<audio id="audio-el" preload="none"></audio>
+<script>
+let SESSION = null;
+let currentTrack = null;
+let trackQueue = [];
+let queueIndex = -1;
+const audio = document.getElementById('audio-el');
+
+async function spotifyFetch(endpoint) {
+    const url = `/api/spotify/${endpoint}${endpoint.includes('?') ? '&' : '?'}session=${SESSION}`;
+    try {
+        const res = await fetch(url);
+        if (res.status === 401) { logout(); return null; }
+        return await res.json();
+    } catch(e) { console.error(e); return null; }
+}
+
+function init() {
+    SESSION = localStorage.getItem('mw_spotify_session');
+    if (SESSION) {
+        document.getElementById('btn-login-sidebar').style.display = 'none';
+        loadProfile();
+        setupPlayer();
+        loadTopTracks();
+        loadRecentlyPlayed();
+    } else {
+        document.getElementById('btn-login-sidebar').textContent = 'Connect Spotify';
+    }
+}
+
+function logout() {
+    localStorage.removeItem('mw_spotify_session');
+    window.location.reload();
+}
+
+async function loadProfile() {
+    const data = await spotifyFetch('me');
+    if (!data || data.error) return;
+    const name = data.display_name || 'Spotify User';
+    const plan = data.product === 'premium' ? 'Premium Member' : 'Free Member';
+    const img = data.images?.[0]?.url || 'https://via.placeholder.com/150';
+    const followers = data.followers?.total || 0;
+    
+    // Sidebar
+    document.getElementById('sidebar-name').textContent = name;
+    document.getElementById('sidebar-plan').textContent = plan;
+    document.getElementById('sidebar-avatar').src = img;
+    
+    // Top nav
+    document.getElementById('top-avatar').src = img;
+    
+    // Hero 
+    document.getElementById('hero-name').textContent = name;
+    document.getElementById('hero-followers').textContent = followers >= 1000 ? (followers/1000).toFixed(1)+'k' : followers;
+    document.getElementById('hero-tier').textContent = plan;
+    document.getElementById('hero-avatar').src = img;
+}
+
+async function loadRecentlyPlayed() {
+    if(!SESSION) return;
+    const data = await spotifyFetch('recently-played');
+    if (!data || !data.items || !data.items.length) return;
+    
+    const container = document.getElementById('recent-container');
+    container.innerHTML = '';
+    
+    const uniqueTracks = [];
+    const ids = new Set();
+    for (const item of data.items) {
+        if (!ids.has(item.track.id)) { ids.add(item.track.id); uniqueTracks.push(item.track); }
+        if (uniqueTracks.length === 3) break; 
+    }
+    
+    uniqueTracks.forEach((track, i) => {
+        const img = track.album?.images?.[1]?.url || track.album?.images?.[0]?.url;
+        const artist = track.artists?.map(a=>a.name).join(', ');
+        const el = document.createElement('div');
+        el.className = 'group relative overflow-hidden rounded-lg bg-surface-container-low hover:bg-surface-container transition-all p-4 flex items-center gap-4 cursor-pointer';
+        el.onclick = () => { trackQueue = uniqueTracks; queueIndex = i; playTrack(track, i); };
+        el.innerHTML = `
+            <img class="w-16 h-16 rounded object-cover shadow-lg group-hover:scale-105 transition-transform" src="${img}">
+            <div class="min-w-0">
+                <h4 class="font-bold text-sm truncate">${track.name}</h4>
+                <p class="text-xs text-on-surface-variant truncate">${artist}</p>
+            </div>
+            <button class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-on-primary p-2 rounded-full shadow-lg">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            </button>
+        `;
+        container.appendChild(el);
+    });
+}
+
+async function loadTopTracks() {
+    if(!SESSION) return;
+    const data = await spotifyFetch(`top-tracks`);
+    if(!data?.items?.length) return;
+    
+    const container = document.getElementById('top-tracks-container');
+    container.innerHTML = '';
+    const tracksToKeep = data.items.slice(0, 5);
+    
+    tracksToKeep.forEach((track, i) => {
+        const img = track.album?.images?.[2]?.url || track.album?.images?.[0]?.url;
+        const artist = track.artists?.map(a=>a.name).join(', ');
+        const durationMin = Math.floor(track.duration_ms / 60000);
+        const durationSec = String(Math.floor((track.duration_ms % 60000) / 1000)).padStart(2, '0');
+        
+        const el = document.createElement('div');
+        el.className = 'group grid grid-cols-12 items-center px-4 py-3 rounded-lg hover:bg-surface-container-high transition-all cursor-pointer';
+        el.onclick = () => { trackQueue = tracksToKeep; queueIndex = i; playTrack(track, i); };
+        el.innerHTML = `
+            <div class="col-span-1 text-on-surface-variant group-hover:hidden">${i+1}</div>
+            <div class="col-span-1 hidden group-hover:block"><span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">play_arrow</span></div>
+            <div class="col-span-6 md:col-span-5 flex items-center gap-4 min-w-0">
+                <img class="w-10 h-10 rounded shrink-0 object-cover" src="${img}">
+                <div class="truncate">
+                    <p class="font-bold text-sm truncate">${track.name}</p>
+                    <p class="text-xs text-on-surface-variant truncate">${artist}</p>
+                </div>
+            </div>
+            <div class="hidden md:block col-span-3 text-sm text-on-surface-variant truncate pr-2">${track.album.name}</div>
+            <div class="col-span-5 md:col-span-3 text-right text-xs text-on-surface-variant">${durationMin}:${durationSec}</div>
+        `;
+        container.appendChild(el);
+    });
+}
+
+async function playMockPlaylist(query) {
+    if(!SESSION) {
+        alert("Please login via the sidebar link to access tracks.");
+        return;
+    }
+    const data = await spotifyFetch(`user-search?q=${encodeURIComponent(query)}&type=track`);
+    if(!data?.tracks?.items?.length) return;
+    trackQueue = data.tracks.items;
+    queueIndex = 0;
+    playTrack(trackQueue[0], 0);
+}
+
+function playTrack(track, idx) {
+    if (!track.preview_url) { 
+        queueIndex++;
+        if(queueIndex < trackQueue.length) playTrack(trackQueue[queueIndex], queueIndex);
+        return; 
+    }
+    currentTrack = track; queueIndex = idx;
+    
+    audio.src = track.preview_url;
+    audio.volume = parseFloat(document.getElementById('volume-fill').style.width || '70') / 100 || 0.7;
+    audio.play().catch(console.warn);
+
+    document.getElementById('player-thumb').src = track.album?.images?.[0]?.url || '';
+    document.getElementById('player-title').textContent = track.name;
+    document.getElementById('player-artist').textContent = track.artists?.map(a=>a.name).join(', ');
+}
+
+function setupPlayer() {
+    document.getElementById('btn-play-pause').onclick = () => {
+        if (!audio.src) return;
+        if (audio.paused) audio.play(); else audio.pause();
+    };
+    document.getElementById('btn-next').onclick = () => playNext();
+    document.getElementById('btn-prev').onclick = () => playPrev();
+
+    document.getElementById('progress-container').onclick = e => {
+        if (!audio.duration) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+    };
+    document.getElementById('volume-container').onclick = e => {
+        const r = e.currentTarget.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+        audio.volume = pct;
+        document.getElementById('volume-fill').style.width = `${pct * 100}%`;
+    };
+
+    audio.onplay = () => { document.getElementById('btn-play-icon').textContent = 'pause_circle'; };
+    audio.onpause = () => { document.getElementById('btn-play-icon').textContent = 'play_circle'; };
+    audio.onended = () => playNext();
+    audio.ontimeupdate = () => {
+        if(!audio.duration) return;
+        document.getElementById('progress-fill').style.width = `${(audio.currentTime/audio.duration)*100}%`;
+    };
+}
+
+function playNext() {
+    if (!trackQueue.length) return;
+    let n = queueIndex;
+    do { n = (n+1)%trackQueue.length; } while (!trackQueue[n]?.preview_url && n!==queueIndex);
+    if(trackQueue[n]?.preview_url) playTrack(trackQueue[n], n);
+}
+function playPrev() {
+    if (!trackQueue.length) return;
+    let n = queueIndex;
+    do { n = (n-1+trackQueue.length)%trackQueue.length; } while (!trackQueue[n]?.preview_url && n!==queueIndex);
+    if(trackQueue[n]?.preview_url) playTrack(trackQueue[n], n);
+}
+
+init();
+</script>
+</body></html>

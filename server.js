@@ -323,6 +323,11 @@ app.get('/library.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'library.html'));
 });
 
+// Serve the Profile page
+app.get('/profile.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'profile.html'));
+});
+
 // Serve the Dashboard page
 app.get('/dashboard.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'dashboard.html'));
