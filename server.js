@@ -1,25 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const path = require('path');
 const https = require('https');
 const querystring = require('querystring');
 const crypto = require('crypto');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const JWT_SECRET = 'your_super_secret_jwt_key_here';
+const JWT_SECRET = process.env.JWT_SECRET || 'Rs7YILgmoWlLMoOK33gzDqcZUgT3RBw6HrQiRyHzYsz';
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // ─── SPOTIFY CREDENTIALS ─────────────────────────────────────────────────────
-const SPOTIFY_CLIENT_ID     = 'ca3b53950d104ceeade097021440634b';
-const SPOTIFY_CLIENT_SECRET = 'aa484d2ea2e841b7b88f48ef1e1cb27e';
-const SPOTIFY_REDIRECT_URI  = 'http://localhost:8080/callback';
-const SPOTIFY_SCOPES        = 'user-read-private user-read-email user-top-read user-library-read user-read-playback-state user-modify-playback-state';
+const SPOTIFY_CLIENT_ID     = process.env.SPOTIFY_CLIENT_ID || 'ca3b53950d104ceeade097021440634b';
+const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET || 'aa484d2ea2e841b7b88f48ef1e1cb27e';
+const SPOTIFY_REDIRECT_URI  = process.env.REDIRECT_URI || 'https://mood-wave-zeta.vercel.app/callback';
+const SPOTIFY_SCOPES        = 'user-read-private user-read-email user-top-read user-library-read user-library-modify playlist-read-private playlist-read-collaborative user-read-playback-state user-modify-playback-state';
 
 // ─── CLIENT CREDENTIALS TOKEN (for anonymous search / featured playlists) ────
 let appAccessToken = '';
@@ -57,24 +57,40 @@ async function getAppToken() {
     });
 }
 
-// ─── USER SESSION STORE (in-memory) ──────────────────────────────────────────
-const sessions = {};
+// ─── USER SESSION HELPERS (JWT based to work on serverless) ─────────────────
+function signSession(data) {
+    return jwt.sign(data, JWT_SECRET, { expiresIn: '1h' });
+}
 
-function makeSpotifyRequest(path, token) {
+function verifySession(token) {
+    try { return jwt.verify(token, JWT_SECRET); }
+    catch(e) { return null; }
+}
+
+function makeSpotifyRequest(path, token, method = 'GET', body = null) {
     return new Promise((resolve, reject) => {
-        const req = https.get({
+        const options = {
             hostname: 'api.spotify.com',
             path,
-            headers: { 'Authorization': `Bearer ${token}` }
-        }, (res) => {
-            let body = '';
-            res.on('data', c => body += c);
+            method,
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        };
+
+        const req = https.request(options, (res) => {
+            let resBody = '';
+            res.on('data', c => resBody += c);
             res.on('end', () => {
-                try { resolve(JSON.parse(body)); }
-                catch(e) { resolve({ error: 'Parse error' }); }
+                if (res.statusCode === 204) return resolve({ success: true });
+                try { resolve(JSON.parse(resBody)); }
+                catch(e) { resolve({ error: 'Parse error', body: resBody }); }
             });
         });
         req.on('error', reject);
+        if (body) req.write(JSON.stringify(body));
+        req.end();
     });
 }
 
@@ -128,66 +144,76 @@ app.get('/callback', async (req, res) => {
         return res.redirect('/spotify.html?error=token_exchange_failed');
     }
 
-    const sessionId = crypto.randomBytes(32).toString('hex');
-    sessions[sessionId] = {
+    const sessionId = signSession({
         accessToken:  tokenData.access_token,
         refreshToken: tokenData.refresh_token,
-        expiresAt:    Date.now() + tokenData.expires_in * 1000 - 60000,
-        createdAt:    Date.now()
-    };
+        expiresAt:    Date.now() + tokenData.expires_in * 1000 - 60000
+    });
 
     res.redirect(`/spotify.html?session=${sessionId}`);
 });
 
 // ─── REFRESH TOKEN ─────────────────────────────────────────────────────────────
-async function refreshUserToken(sessionId) {
-    const session = sessions[sessionId];
-    if (!session || !session.refreshToken) return null;
+async function refreshUserToken(refreshToken) {
+    if (!refreshToken) return null;
 
     const auth = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64');
-    const body = querystring.stringify({ grant_type: 'refresh_token', refresh_token: session.refreshToken });
+    const body = querystring.stringify({ grant_type: 'refresh_token', refresh_token: refreshToken });
 
-    const data = await new Promise((resolve, reject) => {
-        const req = https.request({
-            hostname: 'accounts.spotify.com',
-            path: '/api/token',
-            method: 'POST',
-            headers: {
-                'Authorization': `Basic ${auth}`,
-                'Content-Type':  'application/x-www-form-urlencoded',
-                'Content-Length': Buffer.byteLength(body)
-            }
-        }, (r) => {
-            let d = '';
-            r.on('data', c => d += c);
-            r.on('end', () => resolve(JSON.parse(d)));
+    try {
+        const data = await new Promise((resolve, reject) => {
+            const req = https.request({
+                hostname: 'accounts.spotify.com',
+                path: '/api/token',
+                method: 'POST',
+                headers: {
+                    'Authorization': `Basic ${auth}`,
+                    'Content-Type':  'application/x-www-form-urlencoded',
+                    'Content-Length': Buffer.byteLength(body)
+                }
+            }, (r) => {
+                let d = '';
+                r.on('data', c => d += c);
+                r.on('end', () => resolve(JSON.parse(d)));
+            });
+            req.on('error', reject);
+            req.write(body);
+            req.end();
         });
-        req.on('error', reject);
-        req.write(body);
-        req.end();
-    });
 
-    if (data.access_token) {
-        sessions[sessionId].accessToken = data.access_token;
-        sessions[sessionId].expiresAt   = Date.now() + data.expires_in * 1000 - 60000;
-    }
-    return sessions[sessionId].accessToken;
+        if (data.access_token) {
+            return {
+                accessToken: data.access_token,
+                expiresAt:   Date.now() + data.expires_in * 1000 - 60000
+            };
+        }
+    } catch(e) { console.error('Refresh fail:', e); }
+    return null;
 }
 
-async function getUserToken(sessionId) {
-    const session = sessions[sessionId];
+async function getValidUserToken(session) {
     if (!session) return null;
-    if (Date.now() > session.expiresAt) return await refreshUserToken(sessionId);
+    if (Date.now() > session.expiresAt) {
+        const refreshed = await refreshUserToken(session.refreshToken);
+        if (refreshed) {
+            session.accessToken = refreshed.accessToken;
+            session.expiresAt   = refreshed.expiresAt;
+            // Note: In serverless we can't update original 'session' effectively 
+            // but the client will get failure if it's too old and must relogin.
+            // For now, this temporary session object will work for the lifetime of the request.
+        }
+    }
     return session.accessToken;
 }
 
 // ─── SESSION VALIDATION MIDDLEWARE ────────────────────────────────────────────
 async function requireUserSession(req, res, next) {
     const sessionId = req.query.session || req.headers['x-session-id'];
-    if (!sessionId || !sessions[sessionId]) {
+    const session = verifySession(sessionId);
+    if (!session) {
         return res.status(401).json({ error: 'No valid session. Please login with Spotify.' });
     }
-    req.userToken = await getUserToken(sessionId);
+    req.userToken = await getValidUserToken(session);
     req.sessionId = sessionId;
     next();
 }
@@ -231,33 +257,50 @@ app.get('/api/spotify/user-search', requireUserSession, async (req, res) => {
     } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+app.get('/api/spotify/liked-songs', requireUserSession, async (req, res) => {
+    try {
+        const limit = req.query.limit || 20;
+        const offset = req.query.offset || 0;
+        const data = await makeSpotifyRequest(`/v1/me/tracks?limit=${limit}&offset=${offset}`, req.userToken);
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
 
-// In-memory database array (simulating MongoDB)
-const users = [];
+app.get('/api/spotify/check-liked', requireUserSession, async (req, res) => {
+    try {
+        const { ids } = req.query; // Comma separated IDs
+        const data = await makeSpotifyRequest(`/v1/me/tracks/contains?ids=${ids}`, req.userToken);
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.put('/api/spotify/like-song', requireUserSession, async (req, res) => {
+    try {
+        const { ids } = req.body; // Array of IDs
+        const data = await makeSpotifyRequest(`/v1/me/tracks?ids=${ids.join(',')}`, req.userToken, 'PUT');
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.delete('/api/spotify/unlike-song', requireUserSession, async (req, res) => {
+    try {
+        const { ids } = req.body; // Array of IDs
+        const data = await makeSpotifyRequest(`/v1/me/tracks?ids=${ids.join(',')}`, req.userToken, 'DELETE');
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/spotify/playlists', requireUserSession, async (req, res) => {
+    try {
+        const data = await makeSpotifyRequest('/v1/me/playlists?limit=20', req.userToken);
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
 
 // Serve the static HTML page from the root
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// Serve the login page
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
-});
-
-// Serve the dashboard page
-app.get('/dashboard.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dashboard.html'));
-});
-
-// Serve the reset password page
-app.get('/reset-password', (req, res) => {
-    res.sendFile(path.join(__dirname, 'reset-password.html'));
-});
-
-// Serve the reset success page
-app.get('/reset-success', (req, res) => {
-    res.sendFile(path.join(__dirname, 'reset-success.html'));
 });
 
 // Serve the Spotify integration page
@@ -292,103 +335,9 @@ app.get('/api/spotify/playlist/:id', async (req, res) => {
     } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
-// Authentication endpoint (Signup)
-app.post('/api/signup', async (req, res) => {
-    try {
-        const { fullName, email, password } = req.body;
-
-        // Simple validation
-        if (!fullName || !email || !password) {
-            return res.status(400).json({ message: 'All fields are required.' });
-        }
-
-        // Check if user already exists
-        const existingUser = users.find(u => u.email === email);
-        if (existingUser) {
-            return res.status(409).json({ message: 'User with this email already exists.' });
-        }
-
-        // Hash the password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        // Save user to the "database"
-        const newUser = {
-            id: Date.now().toString(),
-            fullName,
-            email,
-            password: hashedPassword
-        };
-        users.push(newUser);
-
-        // Generate JWT token
-        const token = jwt.sign(
-            { id: newUser.id, email: newUser.email },
-            JWT_SECRET,
-            { expiresIn: '24h' }
-        );
-
-        // Respond with success and token
-        res.status(201).json({
-            message: 'User created successfully',
-            token,
-            user: {
-                id: newUser.id,
-                fullName: newUser.fullName,
-                email: newUser.email
-            }
-        });
-    } catch (error) {
-        console.error('Signup Error:', error);
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-});
-
-// Authentication endpoint (Login)
-app.post('/api/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({ message: 'All fields are required.' });
-        }
-
-        // Check if user exists
-        const user = users.find(u => u.email === email);
-        if (!user) {
-            return res.status(401).json({ message: 'Invalid credentials.' });
-        }
-
-        // Validate password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid credentials.' });
-        }
-
-        // Generate JWT token
-        const token = jwt.sign(
-            { id: user.id, email: user.email },
-            JWT_SECRET,
-            { expiresIn: '24h' }
-        );
-
-        res.status(200).json({
-            message: 'Logged in successfully',
-            token,
-            user: {
-                id: user.id,
-                fullName: user.fullName,
-                email: user.email
-            }
-        });
-    } catch (error) {
-        console.error('Login Error:', error);
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-});
 
 // Start the server
 app.listen(PORT, () => {
     console.log(`MoodWave Server is running on http://localhost:${PORT}`);
-    console.log(`Open http://localhost:${PORT} in your browser to see the Signup Page.`);
+    console.log(`Visit http://localhost:${PORT} to log in with Spotify.`);
 });
